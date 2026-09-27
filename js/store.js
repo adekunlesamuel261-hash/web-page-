@@ -289,6 +289,43 @@ class AppStore {
     this.setCurrentUser(null);
   }
 
+  updateUserAvatar(avatarUrl) {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) return false;
+
+    currentUser.avatar = avatarUrl;
+    this.setCurrentUser(currentUser);
+
+    const users = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+    const user = users.find(u => u.id === currentUser.id);
+    if (user) {
+      user.avatar = avatarUrl;
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+    }
+    return true;
+  }
+
+  updateUserProfile(profileData) {
+    const currentUser = this.getCurrentUser();
+    if (!currentUser) return false;
+
+    if (profileData.name) currentUser.name = profileData.name.trim();
+    if (profileData.phone) currentUser.phone = profileData.phone.trim();
+    if (profileData.avatar) currentUser.avatar = profileData.avatar;
+
+    this.setCurrentUser(currentUser);
+
+    const users = JSON.parse(localStorage.getItem(STORAGE_KEYS.USERS) || '[]');
+    const user = users.find(u => u.id === currentUser.id);
+    if (user) {
+      if (profileData.name) user.name = profileData.name.trim();
+      if (profileData.phone) user.phone = profileData.phone.trim();
+      if (profileData.avatar) user.avatar = profileData.avatar;
+      localStorage.setItem(STORAGE_KEYS.USERS, JSON.stringify(users));
+    }
+    return true;
+  }
+
   // --- Services & Addons ---
   getServices() {
     return DEFAULT_SERVICES;

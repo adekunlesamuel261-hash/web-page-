@@ -102,6 +102,21 @@ const AppModule = {
         clientSwitchBtn.classList.toggle('active', !isAdmin);
         adminSwitchBtn.classList.toggle('active', isAdmin);
       }
+
+      // Profile View Synchronization
+      const profileAvatar = document.getElementById('profile-view-avatar');
+      const profileName = document.getElementById('profile-display-name');
+      const profileBadge = document.getElementById('profile-display-badge');
+      const inputName = document.getElementById('profile-input-name');
+      const inputEmail = document.getElementById('profile-input-email');
+      const inputPhone = document.getElementById('profile-input-phone');
+
+      if (profileAvatar) profileAvatar.src = user.avatar;
+      if (profileName) profileName.innerText = user.name;
+      if (profileBadge) profileBadge.innerText = user.role === 'admin' ? 'Studio Director' : 'VIP Creative Client';
+      if (inputName) inputName.value = user.name;
+      if (inputEmail) inputEmail.value = user.email;
+      if (inputPhone) inputPhone.value = user.phone;
     } else {
       if (userWidget) userWidget.style.display = 'none';
       if (adminNavSection) adminNavSection.style.display = 'none';
@@ -263,6 +278,75 @@ const AppModule = {
       if (e.target.id === 'app-mobile-menu-toggle' || e.target.closest('#app-mobile-menu-toggle')) {
         document.querySelector('.app-sidebar')?.classList.toggle('open');
       }
+
+      // Avatar upload triggers
+      if (e.target.id === 'btn-trigger-upload' || e.target.closest('#btn-trigger-upload') || e.target.id === 'avatar-click-zone' || e.target.closest('#avatar-click-zone')) {
+        document.getElementById('profile-file-input')?.click();
+      }
+
+      // Toggle presets drawer
+      if (e.target.id === 'btn-toggle-presets' || e.target.closest('#btn-toggle-presets')) {
+        const drawer = document.getElementById('avatar-presets-drawer');
+        if (drawer) {
+          drawer.style.display = drawer.style.display === 'none' ? 'block' : 'none';
+        }
+      }
+
+      // Preset avatar option clicked
+      const presetOption = e.target.closest('.preset-avatar-option');
+      if (presetOption) {
+        const url = presetOption.getAttribute('data-url');
+        if (url) {
+          window.StudioStore.updateUserAvatar(url);
+          this.refreshUserState();
+          this.showToast('Avatar preset applied!');
+        }
+      }
+
+      // Apply custom avatar URL
+      if (e.target.id === 'btn-apply-avatar-url' || e.target.closest('#btn-apply-avatar-url')) {
+        const urlInput = document.getElementById('custom-avatar-url');
+        const url = urlInput?.value.trim();
+        if (!url) {
+          this.showToast('Please enter an image link.', 'error');
+        } else {
+          window.StudioStore.updateUserAvatar(url);
+          this.refreshUserState();
+          urlInput.value = '';
+          this.showToast('Profile picture updated from URL!');
+        }
+      }
+    });
+
+    // Native file input change -> read file as Data URL
+    document.getElementById('profile-file-input')?.addEventListener('change', (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
+
+      if (!file.type.startsWith('image/')) {
+        this.showToast('Please select a valid image file.', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (event) => {
+        const dataUrl = event.target.result;
+        window.StudioStore.updateUserAvatar(dataUrl);
+        this.refreshUserState();
+        this.showToast('Profile picture uploaded & updated!');
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Edit profile form submit
+    document.getElementById('profile-edit-form')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name = document.getElementById('profile-input-name').value;
+      const phone = document.getElementById('profile-input-phone').value;
+
+      window.StudioStore.updateUserProfile({ name, phone });
+      this.refreshUserState();
+      this.showToast('Profile details updated successfully!');
     });
 
     document.addEventListener('keydown', (e) => {

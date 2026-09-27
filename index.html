@@ -631,37 +631,79 @@
             <h1 style="font-size: 2.4rem; color: var(--app-ivory);">Client Profile</h1>
           </div>
 
-          <div style="background-color: var(--app-card); border: 1px solid var(--app-border); padding: 2.5rem; border-radius: 4px; max-width: 650px;">
-            <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
-              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--app-gold);">
-              <div>
-                <h3 style="font-size: 1.5rem; color: var(--app-ivory);">Samuel Adekunle</h3>
-                <span class="status-badge status-completed" style="margin-top: 0.3rem;">VIP Creative Client</span>
+          <div style="background-color: var(--app-card); border: 1px solid var(--app-border); border-top: 3px solid var(--app-gold); padding: 2.5rem; border-radius: 4px; max-width: 680px;">
+            
+            <!-- Avatar Header with Interactive Upload Button -->
+            <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--app-border); flex-wrap: wrap;">
+              <div style="position: relative; width: 100px; height: 100px; flex-shrink: 0; cursor: pointer;" id="avatar-click-zone" title="Click to upload profile photo">
+                <img src="" alt="Profile Photo" id="profile-view-avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--app-gold); box-shadow: 0 4px 20px var(--app-gold-glow);">
+                <div style="position: absolute; bottom: 0; right: 0; width: 32px; height: 32px; border-radius: 50%; background-color: var(--app-gold); color: #000; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                  📷
+                </div>
+              </div>
+
+              <div style="flex-grow: 1;">
+                <h3 style="font-size: 1.6rem; color: var(--app-ivory);" id="profile-display-name">Samuel Adekunle</h3>
+                <span class="status-badge status-completed" id="profile-display-badge" style="margin: 0.3rem 0 0.8rem; display: inline-flex;">VIP Creative Client</span>
+                <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                  <button type="button" class="btn-gold" id="btn-trigger-upload" style="padding: 0.5rem 1.1rem; font-size: 0.75rem;">
+                    Upload Photo
+                  </button>
+                  <button type="button" class="btn-dark" id="btn-toggle-presets" style="padding: 0.5rem 1.1rem; font-size: 0.75rem;">
+                    Choose Preset
+                  </button>
+                </div>
+                <!-- Hidden Native File Input -->
+                <input type="file" id="profile-file-input" accept="image/*" style="display: none;">
               </div>
             </div>
 
-            <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+            <!-- Avatar Presets Drawer (Collapsible) -->
+            <div id="avatar-presets-drawer" style="display: none; background-color: var(--app-surface); border: 1px solid var(--app-border); padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
+              <div style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gold); font-weight: 700; margin-bottom: 0.8rem;">
+                Select Studio Avatar Preset
+              </div>
+              <div style="display: flex; gap: 1rem; flex-wrap: wrap;" id="preset-avatars-list">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Studio Classic Male">
+                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Editorial Female">
+                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Luxury African Portrait">
+                <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Tailored Male">
+                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Corporate Executive">
+              </div>
+
+              <!-- Or Paste URL input -->
+              <div style="display: flex; gap: 0.6rem; margin-top: 1.2rem;">
+                <input type="url" id="custom-avatar-url" placeholder="Or paste image URL (e.g. https://...)" style="flex: 1; padding: 0.6rem 0.8rem; font-size: 0.82rem; background-color: var(--app-card); border: 1px solid var(--app-border); color: #fff;">
+                <button type="button" class="btn-gold" id="btn-apply-avatar-url" style="padding: 0.6rem 1rem; font-size: 0.75rem;">Apply Link</button>
+              </div>
+            </div>
+
+            <!-- Profile Details Form -->
+            <form id="profile-edit-form" style="display: flex; flex-direction: column; gap: 1.2rem;">
               <div>
-                <label style="font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray);">Full Name</label>
-                <input type="text" value="Samuel Adekunle" readonly style="width: 100%; padding: 0.8rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Full Name</label>
+                <input type="text" id="profile-input-name" value="Samuel Adekunle" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
               </div>
 
               <div>
-                <label style="font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray);">Email Address</label>
-                <input type="email" value="client@smartstudio.ng" readonly style="width: 100%; padding: 0.8rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Email Address</label>
+                <input type="email" id="profile-input-email" value="client@smartstudio.ng" readonly style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: var(--app-gray); cursor: not-allowed;">
               </div>
 
               <div>
-                <label style="font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray);">Phone Number</label>
-                <input type="tel" value="09027462645" readonly style="width: 100%; padding: 0.8rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Phone Number</label>
+                <input type="tel" id="profile-input-phone" value="09027462645" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
               </div>
 
-              <div style="margin-top: 1rem;">
-                <button class="btn-dark btn-logout" style="color: #EF4444; border-color: rgba(239, 68, 68, 0.4);">
-                  Sign Out of Smart Studio
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--app-border);">
+                <button type="submit" class="btn-gold" style="padding: 0.75rem 1.6rem;">
+                  Save Profile Changes
+                </button>
+                <button type="button" class="btn-dark btn-logout" style="color: #EF4444; border-color: rgba(239, 68, 68, 0.4);">
+                  Sign Out
                 </button>
               </div>
-            </div>
+            </form>
           </div>
         </section>
 
