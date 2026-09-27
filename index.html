@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Smart Studio &bull; Client Portal &amp; Web App</title>
+  <meta name="description" content="Smart Studio Client Portal &amp; Management Web App. Book photography sessions, manage custom packages, review digital photo proofs and track production milestones.">
+  
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="../assets/favicon.svg">
+
+  <!-- Google Fonts: Cormorant Garamond & Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+  <!-- App Stylesheet -->
+  <link rel="stylesheet" href="css/app.css">
+</head>
+<body>
+
+  <div class="app-shell">
+    
+    <!-- ======================================================================
+         APP SIDEBAR NAVIGATION
+         ====================================================================== -->
+    <aside class="app-sidebar" id="app-sidebar" aria-label="Portal Navigation">
+      <div>
+        <div class="sidebar-header">
+          <a href="../index.html" class="app-brand-logo" title="Smart Studio Abuja">
+            <span class="brand-title">SMART STUDIO</span>
+            <span class="brand-badge">STUDIO PORTAL &bull; APP</span>
+          </a>
+        </div>
+
+        <nav class="sidebar-nav">
+          <div class="nav-section-label">CLIENT CONCIERGE</div>
+          
+          <a href="#dashboard" class="app-nav-item active" data-target-view="dashboard">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="7" height="9"></rect>
+              <rect x="14" y="3" width="7" height="5"></rect>
+              <rect x="14" y="12" width="7" height="9"></rect>
+              <rect x="3" y="16" width="7" height="5"></rect>
+            </svg>
+            <span>Dashboard</span>
+          </a>
+
+          <a href="#new-order" class="app-nav-item" data-target-view="new-order">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <circle cx="12" cy="12" r="10"></circle>
+              <line x1="12" y1="8" x2="12" y2="16"></line>
+              <line x1="8" y1="12" x2="16" y2="12"></line>
+            </svg>
+            <span>Book New Session</span>
+          </a>
+
+          <a href="#orders" class="app-nav-item" data-target-view="orders">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+              <polyline points="14 2 14 8 20 8"></polyline>
+              <line x1="16" y1="13" x2="8" y2="13"></line>
+              <line x1="16" y1="17" x2="8" y2="17"></line>
+              <polyline points="10 9 9 9 8 9"></polyline>
+            </svg>
+            <span>My Bookings</span>
+          </a>
+
+          <a href="#proofing" class="app-nav-item" data-target-view="proofing">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+              <circle cx="8.5" cy="8.5" r="1.5"></circle>
+              <polyline points="21 15 16 10 5 21"></polyline>
+            </svg>
+            <span>Photo Proofing</span>
+            <span class="sidebar-badge">12 Ready</span>
+          </a>
+
+          <a href="#profile" class="app-nav-item" data-target-view="profile">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg>
+            <span>My Profile</span>
+          </a>
+
+          <!-- Studio Manager Section (Admin Mode) -->
+          <div id="sidebar-admin-section" style="display: none;">
+            <div class="nav-section-label" style="margin-top: 1rem; color: var(--app-gold);">MANAGEMENT</div>
+            <a href="#admin" class="app-nav-item" data-target-view="admin">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M12 20h9"></path>
+                <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path>
+              </svg>
+              <span>Studio Manager</span>
+            </a>
+          </div>
+        </nav>
+      </div>
+
+      <div class="sidebar-footer">
+        <!-- Current User Profile Widget -->
+        <div class="user-profile-widget" id="sidebar-user-widget">
+          <img src="" alt="User Avatar" class="user-avatar" id="sidebar-user-avatar">
+          <div class="user-meta">
+            <span class="user-meta-name" id="sidebar-user-name">Loading...</span>
+            <span class="user-meta-role" id="sidebar-user-role">Client</span>
+          </div>
+          <button class="btn-logout" title="Sign Out" style="margin-left: auto; color: var(--app-gray); padding: 4px;">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path>
+              <polyline points="16 17 21 12 16 7"></polyline>
+              <line x1="21" y1="12" x2="9" y2="12"></line>
+            </svg>
+          </button>
+        </div>
+
+        <a href="../index.html" class="back-website-link">
+          <span>&larr;</span> Back to Main Website
+        </a>
+      </div>
+    </aside>
+
+    <!-- ======================================================================
+         MAIN APPLICATION AREA
+         ====================================================================== -->
+    <div class="app-main">
+      
+      <!-- Topbar Header -->
+      <header class="app-topbar">
+        <div style="display: flex; align-items: center; gap: 1.2rem;">
+          <button id="app-mobile-menu-toggle" class="btn-dark" style="display: none; padding: 0.5rem 0.8rem;" aria-label="Toggle Menu">
+            ☰
+          </button>
+          <div class="topbar-breadcrumbs">
+            <span>Smart Studio</span>
+            <span>/</span>
+            <span class="active" id="breadcrumb-current">Dashboard</span>
+          </div>
+        </div>
+
+        <div class="topbar-actions">
+          <!-- Role Switcher -->
+          <div class="role-switch-pill" title="Toggle between Client portal and Studio Manager views">
+            <button class="role-btn active" id="role-btn-client">Client View</button>
+            <button class="role-btn" id="role-btn-admin">Studio Manager</button>
+          </div>
+
+          <a href="#new-order" class="btn-gold" data-target-view="new-order" style="padding: 0.55rem 1.2rem; font-size: 0.75rem;">
+            + Book Session
+          </a>
+        </div>
+      </header>
+
+      <!-- App Views Viewport -->
+      <main class="app-content">
+
+        <!-- ==================================================================
+             VIEW 1: CLIENT DASHBOARD
+             ================================================================== -->
+        <section class="app-view-panel" data-view="dashboard">
+          <div class="dashboard-hero-banner">
+            <div class="dashboard-hero-text">
+              <h1>Welcome back, <span id="dashboard-greeting-name">Samuel</span></h1>
+              <p>Your studio sessions, production milestones, and high-resolution photo proofing galleries.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+              <a href="#new-order" class="btn-gold" data-target-view="new-order">Order New Shoot</a>
+              <a href="#proofing" class="btn-outline-gold" data-target-view="proofing">View Proofs (12)</a>
+            </div>
+          </div>
+
+          <!-- Metrics Grid -->
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Active Bookings</span>
+                <div class="metric-icon">📷</div>
+              </div>
+              <div class="metric-value" id="dash-stat-active">1</div>
+              <div class="metric-sub">Studio shoot scheduled</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Proofing Ready</span>
+                <div class="metric-icon">✨</div>
+              </div>
+              <div class="metric-value" id="dash-stat-proofs">1 Gallery</div>
+              <div class="metric-sub">Select your 10 favorites</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Completed Shoots</span>
+                <div class="metric-icon">🎉</div>
+              </div>
+              <div class="metric-value" id="dash-stat-completed">0</div>
+              <div class="metric-sub">High-res archive ready</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-header">
+                <span class="metric-label">Total Invested</span>
+                <div class="metric-icon">₦</div>
+              </div>
+              <div class="metric-value" id="dash-stat-spent">₦270,000</div>
+              <div class="metric-sub">Across 2 bookings</div>
+            </div>
+          </div>
+
+          <!-- Active Shoot Live Milestone Tracker -->
+          <div class="timeline-card">
+            <div class="timeline-card-header">
+              <div>
+                <span style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+                  ACTIVE PRODUCTION #SS-ABJ-9041
+                </span>
+                <h3 style="font-size: 1.6rem; color: var(--app-ivory); margin-top: 0.2rem;">
+                  Signature Portrait Studio Session
+                </h3>
+                <p style="color: var(--app-gray); font-size: 0.85rem;">
+                  Scheduled: Saturday, Oct 4 &bull; 10:00 AM &bull; 4 Kabama Estate Layout, Abuja
+                </p>
+              </div>
+              <span class="status-badge status-shooting">Shooting in Progress</span>
+            </div>
+
+            <div class="tracker-steps">
+              <div class="tracker-step completed">
+                <div class="step-node">✓</div>
+                <div class="step-title">Booked</div>
+                <div class="step-desc">Deposit Verified</div>
+              </div>
+
+              <div class="tracker-step current">
+                <div class="step-node">2</div>
+                <div class="step-title">Studio Shoot</div>
+                <div class="step-desc">Lighting &amp; Outfit Prep</div>
+              </div>
+
+              <div class="tracker-step">
+                <div class="step-node">3</div>
+                <div class="step-title">Proofing</div>
+                <div class="step-desc">Client Selections</div>
+              </div>
+
+              <div class="tracker-step">
+                <div class="step-node">4</div>
+                <div class="step-title">Retouching</div>
+                <div class="step-desc">Skin &amp; Color Grading</div>
+              </div>
+
+              <div class="tracker-step">
+                <div class="step-node">5</div>
+                <div class="step-title">Delivery</div>
+                <div class="step-desc">High-Res Downloads</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Recent Orders Card -->
+          <div class="orders-table-card">
+            <div class="table-header">
+              <h3 style="font-size: 1.3rem;">Recent Bookings &amp; Invoices</h3>
+              <a href="#orders" class="btn-outline-gold" data-target-view="orders" style="padding: 0.4rem 0.9rem; font-size: 0.75rem;">
+                View All Bookings &rarr;
+              </a>
+            </div>
+            <table class="app-table">
+              <thead>
+                <tr>
+                  <th>Order ID</th>
+                  <th>Service &amp; Package</th>
+                  <th>Shoot Date</th>
+                  <th>Status</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="dash-orders-table-body">
+                <!-- Dynamically rendered by app.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             VIEW 2: ONLINE ORDERING & PACKAGE BUILDER WIZARD
+             ================================================================== -->
+        <section class="app-view-panel" data-view="new-order" style="display: none;">
+          <div style="margin-bottom: 2rem;">
+            <span style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+              ONLINE STUDIO STORE
+            </span>
+            <h1 style="font-size: 2.4rem; color: var(--app-ivory);">Configure &amp; Book Your Shoot</h1>
+            <p style="color: var(--app-gray);">Select your desired service, customize with creative studio add-ons, and schedule your appointment.</p>
+          </div>
+
+          <!-- Stepper Tabs -->
+          <div class="wizard-steps-header">
+            <div class="wizard-step-tab active" data-step="1">
+              <div class="tab-number">1</div>
+              <div class="tab-info">
+                <h4>Service &amp; Package</h4>
+                <p>Choose core experience</p>
+              </div>
+            </div>
+
+            <div class="wizard-step-tab" data-step="2">
+              <div class="tab-number">2</div>
+              <div class="tab-info">
+                <h4>Creative Add-Ons</h4>
+                <p>MUA, styling &amp; albums</p>
+              </div>
+            </div>
+
+            <div class="wizard-step-tab" data-step="3">
+              <div class="tab-number">3</div>
+              <div class="tab-info">
+                <h4>Schedule &amp; Stage</h4>
+                <p>Date &amp; studio notes</p>
+              </div>
+            </div>
+
+            <div class="wizard-step-tab" data-step="4">
+              <div class="tab-number">4</div>
+              <div class="tab-info">
+                <h4>Checkout</h4>
+                <p>Review &amp; receipt</p>
+              </div>
+            </div>
+          </div>
+
+          <!-- Wizard Body Grid -->
+          <div class="order-wizard-container">
+            <!-- Left Wizard Flow -->
+            <div class="wizard-content-column">
+              
+              <!-- STEP 1: SERVICE & PACKAGE -->
+              <div class="wizard-step-panel" data-step-panel="1">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--app-ivory);">1. Choose Service Category</h3>
+                <div class="service-select-grid" id="wizard-services-grid">
+                  <!-- Rendered dynamically -->
+                </div>
+
+                <h3 style="font-size: 1.4rem; margin-bottom: 1rem; color: var(--app-ivory); margin-top: 2rem;">2. Select Studio Package</h3>
+                <div class="package-select-grid" id="wizard-packages-grid">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- STEP 2: CREATIVE ADD-ONS -->
+              <div class="wizard-step-panel" data-step-panel="2" style="display: none;">
+                <h3 style="font-size: 1.4rem; margin-bottom: 0.5rem; color: var(--app-ivory);">Enhance Your Shoot with Add-Ons</h3>
+                <p style="color: var(--app-gray); margin-bottom: 1.8rem; font-size: 0.9rem;">
+                  Tailor your production with our in-house styling, hair &amp; makeup artists, drone cinematographers and handcrafted albums.
+                </p>
+                <div class="addons-grid" id="wizard-addons-grid">
+                  <!-- Rendered dynamically -->
+                </div>
+              </div>
+
+              <!-- STEP 3: SCHEDULE & STAGE -->
+              <div class="wizard-step-panel" data-step-panel="3" style="display: none;">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--app-ivory);">Schedule Your Production</h3>
+                
+                <div style="background-color: var(--app-card); border: 1px solid var(--app-border); padding: 2rem; border-radius: 4px; display: flex; flex-direction: column; gap: 1.5rem;">
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem;">
+                    <div>
+                      <label style="display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--app-gray); font-weight: 600; margin-bottom: 0.5rem;">
+                        Preferred Date *
+                      </label>
+                      <input type="date" id="wizard-date-input" style="width: 100%; padding: 0.9rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff; color-scheme: dark;">
+                    </div>
+
+                    <div>
+                      <label style="display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--app-gray); font-weight: 600; margin-bottom: 0.5rem;">
+                        Time Slot *
+                      </label>
+                      <select id="wizard-time-select" style="width: 100%; padding: 0.9rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                        <option value="09:00 AM - 11:30 AM">Morning Session (09:00 AM - 11:30 AM)</option>
+                        <option value="12:00 PM - 02:30 PM">Midday Session (12:00 PM - 02:30 PM)</option>
+                        <option value="03:00 PM - 05:30 PM">Afternoon / Golden Hour (03:00 PM - 05:30 PM)</option>
+                        <option value="Full Day (09:00 AM - 06:00 PM)">Full Day Production (09:00 AM - 06:00 PM)</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div>
+                    <label style="display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--app-gray); font-weight: 600; margin-bottom: 0.5rem;">
+                      Studio Stage or Location
+                    </label>
+                    <select id="wizard-location-select" style="width: 100%; padding: 0.9rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                      <option value="Smart Studio Cyclorama Stage (4 Kabama Estate Layout, Abuja)">Main Studio &bull; White Cyclorama Stage (4 Kabama Estate Layout, Abuja)</option>
+                      <option value="Smart Studio Dark Aesthetic Stage (Gel Lighting &amp; Black Velvet)">Main Studio &bull; Dark Aesthetic Stage with Gel Lighting</option>
+                      <option value="On-Location in Abuja (Client Selected Residence/Venue)">On-Location in Abuja (Hotel, Residence or Outdoor Venue)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label style="display: block; font-size: 0.78rem; text-transform: uppercase; letter-spacing: 0.15em; color: var(--app-gray); font-weight: 600; margin-bottom: 0.5rem;">
+                      Wardrobe, Concept &amp; Special Inspiration Notes
+                    </label>
+                    <textarea id="wizard-notes-input" placeholder="e.g. 2 evening gowns, mood is cinematic and moody, need high contrast lighting..." style="width: 100%; min-height: 100px; padding: 0.9rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;"></textarea>
+                  </div>
+                </div>
+              </div>
+
+              <!-- STEP 4: CHECKOUT & CONFIRMATION -->
+              <div class="wizard-step-panel" data-step-panel="4" style="display: none;">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--app-ivory);">Review Booking Details</h3>
+                <div style="background-color: var(--app-card); border: 1px solid var(--app-border); padding: 2rem; border-radius: 4px; display: flex; flex-direction: column; gap: 1.2rem;">
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-bottom: 1px solid var(--app-border); padding-bottom: 1.2rem;">
+                    <div>
+                      <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Client Name</span>
+                      <div id="review-client-name" style="font-weight: 600; font-size: 1.1rem; color: var(--app-ivory);">Samuel Adekunle</div>
+                    </div>
+                    <div>
+                      <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Contact Phone</span>
+                      <div id="review-client-phone" style="font-weight: 600; font-size: 1.1rem; color: var(--app-ivory);">09027462645</div>
+                    </div>
+                  </div>
+
+                  <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-bottom: 1px solid var(--app-border); padding-bottom: 1.2rem;">
+                    <div>
+                      <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Shoot Date &amp; Time</span>
+                      <div id="review-shoot-date" style="font-weight: 600; color: var(--app-gold);">Oct 12, 2026 at 10:00 AM</div>
+                    </div>
+                    <div>
+                      <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Location</span>
+                      <div id="review-shoot-loc" style="font-weight: 500; font-size: 0.95rem; color: var(--app-ivory);">Smart Studio Abuja</div>
+                    </div>
+                  </div>
+
+                  <div>
+                    <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Creative Notes</span>
+                    <p id="review-shoot-notes" style="font-size: 0.9rem; color: var(--app-ivory-dim); margin-top: 0.2rem;">-</p>
+                  </div>
+
+                  <div style="background-color: var(--app-surface); padding: 1.2rem; border-left: 3px solid var(--app-gold); margin-top: 0.5rem;">
+                    <div style="font-size: 0.85rem; font-weight: 600; color: var(--app-gold);">Payment Guarantee</div>
+                    <p style="font-size: 0.78rem; color: var(--app-gray); margin-top: 0.2rem;">
+                      Your slot will be reserved immediately upon submission. You may pay your deposit online via Paystack or at the studio counter via POS on arrival.
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Wizard Nav Controls -->
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 2rem;">
+                <button id="wizard-prev-btn" class="btn-dark" style="display: none;">&larr; Previous Step</button>
+                <div></div>
+                <button id="wizard-next-btn" class="btn-gold">Continue to Add-Ons &rarr;</button>
+                <button id="wizard-submit-btn" class="btn-gold" style="display: none;">Complete Booking &amp; Generate Invoice &rarr;</button>
+              </div>
+
+            </div>
+
+            <!-- Right Sticky Summary Rail -->
+            <aside class="order-summary-rail">
+              <h3 class="summary-title">Order Summary</h3>
+
+              <div class="summary-line-item">
+                <span>Selected Service</span>
+                <span id="summary-service-name" style="font-weight: 600; color: var(--app-ivory);">Portrait</span>
+              </div>
+
+              <div class="summary-line-item">
+                <span>Package</span>
+                <span id="summary-package-name" style="font-weight: 600; color: var(--app-ivory);">Signature</span>
+              </div>
+
+              <div class="summary-line-item">
+                <span>Package Base</span>
+                <span id="summary-base-price" style="font-weight: 600; color: var(--app-gold);">₦85,000</span>
+              </div>
+
+              <div style="margin: 1.2rem 0 0.8rem; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gray); font-weight: 700;">
+                Selected Add-Ons
+              </div>
+
+              <div id="summary-addons-list">
+                <!-- Rendered dynamically -->
+              </div>
+
+              <div class="summary-line-item total">
+                <span>Total Investment</span>
+                <span class="summary-total-amount" id="summary-total-price">₦85,000</span>
+              </div>
+
+              <div style="margin-top: 1.5rem; font-size: 0.75rem; color: var(--app-gray); text-align: center;">
+                Includes professional retouching, online proof gallery &amp; high-res delivery.
+              </div>
+            </aside>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             VIEW 3: MY BOOKINGS & ORDERS
+             ================================================================== -->
+        <section class="app-view-panel" data-view="orders" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-end; margin-bottom: 2rem;">
+            <div>
+              <span style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+                ORDERS &amp; SESSIONS
+              </span>
+              <h1 style="font-size: 2.4rem; color: var(--app-ivory);">My Studio Bookings</h1>
+            </div>
+            <a href="#new-order" class="btn-gold" data-target-view="new-order">+ Book Another Shoot</a>
+          </div>
+
+          <div id="my-orders-list-container">
+            <!-- Rendered dynamically by app.js -->
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             VIEW 4: DIGITAL PHOTO PROOFING GALLERY
+             ================================================================== -->
+        <section class="app-view-panel" data-view="proofing" style="display: none;">
+          <div class="proofing-header-card">
+            <div>
+              <span style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+                ONLINE PROOFING SUITE &bull; ORDER #SS-ABJ-8724
+              </span>
+              <h1 style="font-size: 2.2rem; color: var(--app-ivory); margin-top: 0.3rem;" id="proofing-shoot-title">
+                Creative EP Concept Shoot &bull; Selection Gallery
+              </h1>
+              <p style="color: var(--app-gray); font-size: 0.9rem;">
+                Date: <span id="proofing-shoot-date">Sept 20, 2026</span> &bull; Status: <span id="proofing-status-badge" style="color: var(--app-gold);">Reviewing Proofs</span>
+              </p>
+            </div>
+
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+              <div class="proofing-quota-meter">
+                <div class="quota-count">
+                  <span id="proofing-selected-count">7</span>/<span id="proofing-quota-total">10</span>
+                </div>
+                <div style="font-size: 0.75rem; color: var(--app-gray);">
+                  FAVORITES<br>SELECTED
+                </div>
+              </div>
+
+              <button class="btn-gold" id="submit-proof-selections-btn">
+                Submit for Retouching &rarr;
+              </button>
+            </div>
+          </div>
+
+          <!-- Proofing Filter Tabs -->
+          <div class="proofing-filter-tabs">
+            <button class="proofing-filter-btn active" data-filter="all">All Photos (12)</button>
+            <button class="proofing-filter-btn" data-filter="favorites">★ My Favorites Only</button>
+            <button class="proofing-filter-btn" data-filter="notes">💬 With My Notes</button>
+          </div>
+
+          <!-- Proofing Photo Grid -->
+          <div class="proofing-grid" id="proofing-photos-grid">
+            <!-- Dynamically populated by proofing.js -->
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             VIEW 5: STUDIO ADMIN / MANAGER VIEW
+             ================================================================== -->
+        <section class="app-view-panel" data-view="admin" style="display: none;">
+          <div style="margin-bottom: 2rem;">
+            <span style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+              STUDIO EXECUTIVE CONSOLE
+            </span>
+            <h1 style="font-size: 2.4rem; color: var(--app-ivory);">Studio Manager &amp; Orders Ledger</h1>
+            <p style="color: var(--app-gray);">Oversee all client bookings, advance milestone shooting stages, and track studio production.</p>
+          </div>
+
+          <!-- Admin Metric Ribbon -->
+          <div class="admin-metric-ribbon">
+            <div class="metric-card">
+              <div class="metric-label">Total Bookings</div>
+              <div class="metric-value" id="admin-stat-total-orders">2</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-label">Total Studio Revenue</div>
+              <div class="metric-value" id="admin-stat-revenue" style="color: var(--app-gold);">₦270,000</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-label">Shoots Scheduled</div>
+              <div class="metric-value" id="admin-stat-active-shoots">1</div>
+            </div>
+
+            <div class="metric-card">
+              <div class="metric-label">Proofing Pending</div>
+              <div class="metric-value" id="admin-stat-proofing">1</div>
+            </div>
+          </div>
+
+          <!-- All Orders Table -->
+          <div class="orders-table-card">
+            <div class="table-header">
+              <h3 style="font-size: 1.3rem;">All Client Sessions</h3>
+              <span style="font-size: 0.8rem; color: var(--app-gold);">Change dropdown to advance shoot milestone</span>
+            </div>
+            <table class="app-table">
+              <thead>
+                <tr>
+                  <th>Order</th>
+                  <th>Client</th>
+                  <th>Service &amp; Package</th>
+                  <th>Schedule</th>
+                  <th>Total</th>
+                  <th>Production Milestone</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="admin-orders-table-body">
+                <!-- Dynamically rendered by admin.js -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             VIEW 6: MY PROFILE & SETTINGS
+             ================================================================== -->
+        <section class="app-view-panel" data-view="profile" style="display: none;">
+          <div style="margin-bottom: 2rem;">
+            <span style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+              ACCOUNT SETTINGS
+            </span>
+            <h1 style="font-size: 2.4rem; color: var(--app-ivory);">Client Profile</h1>
+          </div>
+
+          <div style="background-color: var(--app-card); border: 1px solid var(--app-border); padding: 2.5rem; border-radius: 4px; max-width: 650px;">
+            <div style="display: flex; align-items: center; gap: 1.5rem; margin-bottom: 2rem;">
+              <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" style="width: 80px; height: 80px; border-radius: 50%; object-fit: cover; border: 2px solid var(--app-gold);">
+              <div>
+                <h3 style="font-size: 1.5rem; color: var(--app-ivory);">Samuel Adekunle</h3>
+                <span class="status-badge status-completed" style="margin-top: 0.3rem;">VIP Creative Client</span>
+              </div>
+            </div>
+
+            <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+              <div>
+                <label style="font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray);">Full Name</label>
+                <input type="text" value="Samuel Adekunle" readonly style="width: 100%; padding: 0.8rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+              </div>
+
+              <div>
+                <label style="font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray);">Email Address</label>
+                <input type="email" value="client@smartstudio.ng" readonly style="width: 100%; padding: 0.8rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+              </div>
+
+              <div>
+                <label style="font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray);">Phone Number</label>
+                <input type="tel" value="09027462645" readonly style="width: 100%; padding: 0.8rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+              </div>
+
+              <div style="margin-top: 1rem;">
+                <button class="btn-dark btn-logout" style="color: #EF4444; border-color: rgba(239, 68, 68, 0.4);">
+                  Sign Out of Smart Studio
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             VIEW 7: AUTHENTICATION (SIGN IN & REGISTER)
+             ================================================================== -->
+        <section class="app-view-panel" data-view="auth" style="display: none;">
+          <div class="auth-wrapper">
+            <div style="text-align: center; margin-bottom: 2rem;">
+              <span class="brand-title" style="font-size: 1.8rem;">SMART STUDIO</span>
+              <div class="brand-badge">CLIENT PORTAL ACCESS</div>
+            </div>
+
+            <div class="auth-tabs">
+              <button class="auth-tab-btn active" data-tab="login">Sign In</button>
+              <button class="auth-tab-btn" data-tab="register">Register</button>
+            </div>
+
+            <!-- Login Panel -->
+            <div id="login-form-panel">
+              <form id="app-login-form">
+                <div style="margin-bottom: 1.2rem;">
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Email</label>
+                  <input type="email" id="login-email" value="client@smartstudio.ng" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <div style="margin-bottom: 1.8rem;">
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Password</label>
+                  <input type="password" id="login-password" value="password123" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <button type="submit" class="btn-gold" style="width: 100%;">Sign In &rarr;</button>
+              </form>
+            </div>
+
+            <!-- Register Panel -->
+            <div id="register-form-panel" style="display: none;">
+              <form id="app-register-form">
+                <div style="margin-bottom: 1rem;">
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Full Name</label>
+                  <input type="text" id="reg-name" required placeholder="e.g. Samuel Adekunle" style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Email</label>
+                  <input type="email" id="reg-email" required placeholder="e.g. samuel@example.com" style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <div style="margin-bottom: 1rem;">
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Phone</label>
+                  <input type="tel" id="reg-phone" required placeholder="09027462645" style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <div style="margin-bottom: 1.6rem;">
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Password</label>
+                  <input type="password" id="reg-password" required placeholder="••••••••" style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <button type="submit" class="btn-gold" style="width: 100%;">Create Account &rarr;</button>
+              </form>
+            </div>
+
+            <!-- Instant 1-Click Demo Buttons -->
+            <div class="demo-login-box">
+              <span style="font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gray);">Instant Demo Access</span>
+              <button class="demo-login-btn" id="demo-client-btn" style="margin-top: 0.8rem;">
+                ⚡ 1-Click Client Login (Samuel Adekunle)
+              </button>
+              <button class="demo-login-btn" id="demo-admin-btn">
+                👑 1-Click Studio Director Login (Admin)
+              </button>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 1: RECEIPT & INVOICE PREVIEW MODAL
+       ======================================================================== -->
+  <div class="app-modal-backdrop" id="receipt-modal" role="dialog" aria-modal="true">
+    <div class="app-modal-box">
+      <button class="app-modal-close" style="position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.8rem;">&times;</button>
+      
+      <div style="text-align: center; border-bottom: 1px solid var(--app-border); padding-bottom: 1.5rem; margin-bottom: 1.5rem;">
+        <span class="brand-title" style="font-size: 1.8rem;">SMART STUDIO</span>
+        <div style="font-size: 0.7rem; color: var(--app-gold); letter-spacing: 0.25em;">OFFICIAL BOOKING INVOICE &bull; ABUJA, NIGERIA</div>
+        <p style="font-size: 0.8rem; color: var(--app-gray); margin-top: 0.3rem;">4 Kabama Estate Layout, Abuja &bull; Phone: 09027462645</p>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+        <div>
+          <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Invoice Number</span>
+          <div id="receipt-order-id" style="font-weight: 700; color: var(--app-gold);">SS-ABJ-0000</div>
+        </div>
+        <div style="text-align: right;">
+          <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Client Name</span>
+          <div id="receipt-client-name" style="font-weight: 600; color: var(--app-ivory);">Samuel Adekunle</div>
+        </div>
+      </div>
+
+      <div style="background-color: var(--app-surface); border: 1px solid var(--app-border); padding: 1.2rem; border-radius: 4px; margin-bottom: 1.5rem;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <strong id="receipt-service-title">Portrait Signature Session</strong>
+          <span style="color: var(--app-gold);">Confirmed</span>
+        </div>
+        <div style="font-size: 0.8rem; color: var(--app-gray);" id="receipt-shoot-datetime">
+          October 12, 2026 at 10:00 AM
+        </div>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 1.4rem; font-weight: 700; border-top: 1px solid var(--app-border); padding-top: 1.2rem; margin-bottom: 2rem;">
+        <span>Total Amount</span>
+        <span id="receipt-total-amount" style="font-family: var(--font-serif); color: var(--app-gold); font-size: 2rem;">₦0</span>
+      </div>
+
+      <div style="display: flex; gap: 1rem;">
+        <button class="btn-gold" style="flex: 1;" onclick="window.print()">Print Receipt</button>
+        <button class="btn-dark app-modal-close" style="flex: 1;">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 2: PHOTO RETOUCHING NOTE / COMMENT MODAL
+       ======================================================================== -->
+  <div class="app-modal-backdrop" id="proof-comment-modal" role="dialog" aria-modal="true">
+    <div class="app-modal-box" style="max-width: 500px;">
+      <button class="app-modal-close" style="position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.8rem;">&times;</button>
+      <h3 style="font-size: 1.4rem; color: var(--app-ivory); margin-bottom: 0.4rem;">Add Retouching Note</h3>
+      <p style="color: var(--app-gray); font-size: 0.85rem; margin-bottom: 1.4rem;">
+        Frame: <strong id="comment-photo-title" style="color: var(--app-gold);">-</strong>
+      </p>
+
+      <form id="photo-comment-form">
+        <textarea id="photo-comment-text" required placeholder="e.g. Soften shadows under eyes, enhance contrast on suit fabric..." style="width: 100%; min-height: 120px; padding: 1rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff; margin-bottom: 1.5rem;"></textarea>
+        
+        <div style="display: flex; justify-content: flex-end; gap: 1rem;">
+          <button type="button" class="btn-dark app-modal-close">Cancel</button>
+          <button type="submit" class="btn-gold">Save Note</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 3: PROOF LIGHTBOX MODAL
+       ======================================================================== -->
+  <div class="app-modal-backdrop" id="proof-lightbox-modal" role="dialog" aria-modal="true">
+    <div style="position: relative; max-width: 1000px; max-height: 90vh; display: flex; flex-direction: column; align-items: center;">
+      <button class="app-modal-close" style="position: absolute; top: -3rem; right: 0; color: #fff; font-size: 2.5rem;">&times;</button>
+      <img id="lightbox-full-img" src="" alt="Proof Preview" style="max-width: 100%; max-height: 80vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.1);">
+      <div id="lightbox-photo-caption" style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--app-gold); margin-top: 1rem;"></div>
+    </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="js/store.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/ordering.js"></script>
+  <script src="js/proofing.js"></script>
+  <script src="js/admin.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
