@@ -50,6 +50,11 @@
 body {
   font-family: var(--font-sans);
   background-color: var(--app-bg);
+  background-image: 
+    radial-gradient(circle at 12% 18%, rgba(198, 161, 91, 0.08) 0%, transparent 45%),
+    radial-gradient(circle at 88% 30%, rgba(198, 161, 91, 0.05) 0%, transparent 40%),
+    radial-gradient(circle at 50% 90%, rgba(198, 161, 91, 0.04) 0%, transparent 50%);
+  background-attachment: fixed;
   color: var(--app-ivory);
   line-height: 1.6;
   min-height: 100vh;
@@ -1265,3 +1270,618 @@ button {
     align-items: flex-start;
   }
 }
+
+/* ==========================================================================
+   11. LUXURY EXTENSION FEATURES
+   ========================================================================== */
+
+/* Topbar Studio Lounge Soundscape */
+.soundscape-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.45rem 0.95rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--app-border);
+  border-radius: 20px;
+  color: var(--app-gray);
+  font-size: 0.76rem;
+  font-weight: 600;
+  letter-spacing: 0.05em;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.soundscape-btn:hover {
+  border-color: var(--app-gold);
+  color: var(--app-ivory);
+  background: rgba(198, 161, 91, 0.08);
+}
+
+.soundscape-btn.playing {
+  border-color: var(--app-gold);
+  color: var(--app-gold);
+  background: rgba(198, 161, 91, 0.12);
+  box-shadow: 0 0 15px rgba(198, 161, 91, 0.2);
+}
+
+.soundscape-waves {
+  display: flex;
+  align-items: flex-end;
+  gap: 2.5px;
+  height: 14px;
+}
+
+.soundscape-waves .bar {
+  width: 2.5px;
+  background-color: var(--app-gray);
+  border-radius: 1px;
+  transition: all 0.2s ease;
+}
+
+.soundscape-btn.playing .soundscape-waves .bar {
+  background-color: var(--app-gold);
+}
+
+.soundscape-waves .bar-1 { height: 6px; }
+.soundscape-waves .bar-2 { height: 12px; }
+.soundscape-waves .bar-3 { height: 8px; }
+.soundscape-waves .bar-4 { height: 14px; }
+
+.soundscape-btn.playing .bar-1 { animation: waveBounce 0.9s ease-in-out infinite alternate; }
+.soundscape-btn.playing .bar-2 { animation: waveBounce 0.7s ease-in-out infinite alternate 0.2s; }
+.soundscape-btn.playing .bar-3 { animation: waveBounce 0.8s ease-in-out infinite alternate 0.4s; }
+.soundscape-btn.playing .bar-4 { animation: waveBounce 0.6s ease-in-out infinite alternate 0.1s; }
+
+@keyframes waveBounce {
+  0% { height: 4px; }
+  100% { height: 14px; }
+}
+
+/* --------------------------------------------------------------------------
+   Live Countdown & Studio Atmosphere Widget (Dashboard)
+   -------------------------------------------------------------------------- */
+.countdown-atmosphere-card {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr;
+  gap: 1.5rem;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95) 0%, rgba(20, 20, 20, 0.98) 100%);
+  border: 1px solid var(--app-border);
+  border-left: 4px solid var(--app-gold);
+  border-radius: 4px;
+  padding: 1.6rem 2rem;
+  margin-bottom: 2rem;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+  backdrop-filter: blur(12px);
+  position: relative;
+  overflow: hidden;
+}
+
+.countdown-atmosphere-card::after {
+  content: '';
+  position: absolute;
+  top: -50%;
+  right: -20%;
+  width: 320px;
+  height: 320px;
+  background: radial-gradient(circle, rgba(198, 161, 91, 0.09) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.countdown-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--app-gold);
+  font-weight: 700;
+  margin-bottom: 0.8rem;
+}
+
+.pulse-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background-color: var(--app-gold);
+  box-shadow: 0 0 10px var(--app-gold);
+  animation: pulseGlow 1.8s infinite;
+}
+
+@keyframes pulseGlow {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.4; transform: scale(0.85); }
+}
+
+.countdown-digits-grid {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.9rem;
+}
+
+.countdown-unit {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.45);
+  border: 1px solid rgba(198, 161, 91, 0.25);
+  padding: 0.5rem 0.9rem;
+  border-radius: 4px;
+  min-width: 65px;
+}
+
+.count-num {
+  font-family: var(--font-serif);
+  font-size: 1.85rem;
+  line-height: 1;
+  font-weight: 600;
+  color: var(--app-ivory);
+}
+
+.count-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  color: var(--app-gold);
+  font-weight: 700;
+  margin-top: 0.25rem;
+}
+
+.countdown-sep {
+  font-size: 1.5rem;
+  color: var(--app-gold);
+  font-weight: 300;
+  opacity: 0.6;
+}
+
+.countdown-session-info {
+  font-size: 0.84rem;
+  color: var(--app-ivory-dim);
+}
+
+.countdown-session-info strong {
+  color: var(--app-ivory);
+}
+
+.atmosphere-block {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  border-left: 1px solid var(--app-border);
+  padding-left: 1.5rem;
+}
+
+.atmosphere-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin-bottom: 0.8rem;
+}
+
+.atmo-icon {
+  font-size: 1.4rem;
+  line-height: 1;
+}
+
+.atmo-val {
+  font-size: 0.86rem;
+  font-weight: 600;
+  color: var(--app-ivory);
+}
+
+.atmo-sub {
+  font-size: 0.72rem;
+  color: var(--app-gray);
+}
+
+.atmo-actions {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.atmo-btn {
+  padding: 0.45rem 0.9rem;
+  font-size: 0.74rem;
+}
+
+/* --------------------------------------------------------------------------
+   Master Retouch Comparison Slider (Proofing View)
+   -------------------------------------------------------------------------- */
+.retouch-comparison-card {
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  border-radius: 4px;
+  padding: 2rem;
+  margin-bottom: 2.5rem;
+}
+
+.retouch-comp-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.section-gold-tag {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--app-gold);
+  font-weight: 700;
+}
+
+.retouch-preset-pills {
+  display: flex;
+  gap: 0.5rem;
+  background: var(--app-surface);
+  padding: 4px;
+  border-radius: 4px;
+  border: 1px solid var(--app-border);
+}
+
+.retouch-preset-btn {
+  padding: 0.4rem 0.85rem;
+  font-size: 0.75rem;
+  color: var(--app-gray);
+  border-radius: 3px;
+  transition: var(--transition);
+  cursor: pointer;
+}
+
+.retouch-preset-btn.active, .retouch-preset-btn:hover {
+  background: var(--app-gold);
+  color: #000;
+  font-weight: 600;
+}
+
+.ba-slider-container {
+  position: relative;
+  width: 100%;
+  height: 480px;
+  border-radius: 4px;
+  overflow: hidden;
+  user-select: none;
+  cursor: ew-resize;
+  border: 1px solid var(--app-border);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.6);
+  background-color: #000;
+}
+
+.ba-image-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.ba-image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ba-before img {
+  filter: saturate(0.68) contrast(0.85) brightness(0.92);
+}
+
+.ba-after {
+  width: 50%;
+  border-right: 2px solid var(--app-gold);
+  z-index: 2;
+  box-shadow: 3px 0 15px rgba(0, 0, 0, 0.6);
+}
+
+.ba-after img {
+  filter: saturate(1.2) contrast(1.12) brightness(1.04);
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.ba-tag {
+  position: absolute;
+  top: 1.2rem;
+  padding: 0.35rem 0.8rem;
+  font-size: 0.68rem;
+  letter-spacing: 0.15em;
+  font-weight: 700;
+  text-transform: uppercase;
+  border-radius: 3px;
+  pointer-events: none;
+  backdrop-filter: blur(8px);
+  z-index: 4;
+}
+
+.ba-tag-before {
+  right: 1.2rem;
+  background: rgba(0, 0, 0, 0.75);
+  color: var(--app-gray);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+}
+
+.ba-tag-after {
+  left: 1.2rem;
+  background: rgba(198, 161, 91, 0.92);
+  color: #000;
+  border: 1px solid var(--app-gold);
+}
+
+.ba-divider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 2px;
+  background: var(--app-gold);
+  z-index: 10;
+  transform: translateX(-50%);
+  pointer-events: none;
+}
+
+.ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: var(--app-gold);
+  color: #000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: bold;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.8), 0 0 15px var(--app-gold-glow);
+  border: 2px solid #fff;
+  transition: transform 0.15s ease;
+}
+
+.ba-slider-container:hover .ba-handle {
+  transform: translate(-50%, -50%) scale(1.1);
+}
+
+/* --------------------------------------------------------------------------
+   3D Holographic VIP Membership Card (Profile View)
+   -------------------------------------------------------------------------- */
+.profile-grid-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+.vip-card-perspective {
+  perspective: 1200px;
+  margin-bottom: 1.5rem;
+}
+
+.vip-metal-card {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  height: 250px;
+  background: linear-gradient(135deg, #1c1c1c 0%, #111111 60%, #080808 100%);
+  border-radius: 14px;
+  border: 1px solid rgba(198, 161, 91, 0.4);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7), 0 0 25px rgba(198, 161, 91, 0.15);
+  padding: 1.6rem 1.8rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  transition: transform 0.15s ease-out, box-shadow 0.2s ease;
+  transform-style: preserve-3d;
+  cursor: pointer;
+}
+
+.vip-card-shine {
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 200%;
+  height: 100%;
+  background: linear-gradient(115deg, transparent 20%, rgba(255, 255, 255, 0.08) 45%, rgba(198, 161, 91, 0.25) 50%, rgba(255, 255, 255, 0.08) 55%, transparent 80%);
+  pointer-events: none;
+  transition: opacity 0.3s;
+}
+
+.vip-card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: relative;
+  z-index: 2;
+}
+
+.vip-brand-name {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  letter-spacing: 0.12em;
+  color: var(--app-ivory);
+  font-weight: 600;
+}
+
+.vip-card-chip {
+  width: 38px;
+  height: 28px;
+  background: linear-gradient(135deg, #d4af37 0%, #aa771c 100%);
+  border-radius: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  position: relative;
+}
+
+.vip-card-chip::after {
+  content: '';
+  position: absolute;
+  top: 40%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: rgba(0, 0, 0, 0.4);
+}
+
+.vip-card-body {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+  position: relative;
+  z-index: 2;
+  margin: 0.4rem 0;
+}
+
+.vip-card-avatar-halo {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  flex-shrink: 0;
+}
+
+.vip-card-avatar-halo img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--app-gold);
+  position: relative;
+  z-index: 2;
+}
+
+.vip-avatar-pulse {
+  position: absolute;
+  inset: -4px;
+  border-radius: 50%;
+  background: conic-gradient(from 0deg, var(--app-gold), transparent, var(--app-gold));
+  animation: rotateSpin 4s linear infinite;
+  z-index: 1;
+  opacity: 0.85;
+}
+
+@keyframes rotateSpin {
+  100% { transform: rotate(360deg); }
+}
+
+.vip-card-number {
+  font-family: monospace;
+  font-size: 1.05rem;
+  letter-spacing: 0.22em;
+  color: var(--app-ivory);
+  font-weight: 500;
+}
+
+.vip-card-tier {
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  color: var(--app-gold);
+  text-transform: uppercase;
+  font-weight: 700;
+  margin-top: 0.2rem;
+}
+
+.vip-card-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  position: relative;
+  z-index: 2;
+}
+
+.vip-holder-name {
+  font-family: var(--font-serif);
+  font-size: 1.25rem;
+  color: var(--app-ivory);
+  letter-spacing: 0.05em;
+  line-height: 1.2;
+}
+
+.vip-holder-label {
+  font-size: 0.58rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--app-gray);
+}
+
+.vip-card-location {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  color: var(--app-gold);
+  text-transform: uppercase;
+  text-align: right;
+}
+
+.vip-perks-box {
+  background: var(--app-card);
+  border: 1px solid var(--app-border);
+  border-radius: 4px;
+  padding: 1.5rem;
+}
+
+.vip-perks-title {
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--app-gold);
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.vip-perk-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  font-size: 0.82rem;
+  color: var(--app-ivory-dim);
+  margin-bottom: 0.75rem;
+}
+
+.vip-perk-icon {
+  font-size: 1rem;
+  color: var(--app-gold);
+  width: 20px;
+  text-align: center;
+}
+
+@media (max-width: 1024px) {
+  .countdown-atmosphere-card {
+    grid-template-columns: 1fr;
+  }
+  .atmosphere-block {
+    border-left: none;
+    border-top: 1px solid var(--app-border);
+    padding-left: 0;
+    padding-top: 1.2rem;
+  }
+  .profile-grid-layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 768px) {
+  .ba-slider-container {
+    height: 320px;
+  }
+  .countdown-digits-grid {
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+  .countdown-unit {
+    min-width: 55px;
+    padding: 0.4rem 0.6rem;
+  }
+  .count-num {
+    font-size: 1.4rem;
+  }
+}
+

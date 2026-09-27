@@ -22,6 +22,11 @@ const AppModule = {
     OrderingModule.init();
     ProofingModule.init();
     AdminModule.init();
+
+    // Initialize luxury feature extensions
+    this.startCountdown();
+    this.initVipCard3D();
+    this.initSoundscape();
   },
 
   navigate(viewId) {
@@ -117,6 +122,14 @@ const AppModule = {
       if (inputName) inputName.value = user.name;
       if (inputEmail) inputEmail.value = user.email;
       if (inputPhone) inputPhone.value = user.phone;
+
+      // VIP Metal Card Synchronization
+      const vipCardAvatar = document.getElementById('vip-card-avatar-img');
+      const vipCardHolder = document.getElementById('vip-card-holder-name');
+      const vipCardTier = document.getElementById('vip-card-tier-text');
+      if (vipCardAvatar) vipCardAvatar.src = user.avatar;
+      if (vipCardHolder) vipCardHolder.innerText = user.name;
+      if (vipCardTier) vipCardTier.innerText = user.role === 'admin' ? 'STUDIO DIRECTOR ACCESS' : 'VIP CREATIVE CLIENT';
     } else {
       if (userWidget) userWidget.style.display = 'none';
       if (adminNavSection) adminNavSection.style.display = 'none';
@@ -316,6 +329,16 @@ const AppModule = {
           this.showToast('Profile picture updated from URL!');
         }
       }
+
+      // Open shoot checklist modal
+      if (e.target.id === 'btn-shoot-prep-guide' || e.target.closest('#btn-shoot-prep-guide')) {
+        document.getElementById('prep-checklist-modal')?.classList.add('active');
+      }
+
+      // Sync shoot to calendar
+      if (e.target.id === 'btn-sync-calendar' || e.target.closest('#btn-sync-calendar')) {
+        this.downloadCalendarFile();
+      }
     });
 
     // Native file input change -> read file as Data URL
@@ -354,6 +377,189 @@ const AppModule = {
         document.querySelectorAll('.app-modal-backdrop').forEach(m => m.classList.remove('active'));
       }
     });
+  },
+
+  startCountdown() {
+    const cdDays = document.getElementById('cd-days');
+    const cdHours = document.getElementById('cd-hours');
+    const cdMins = document.getElementById('cd-mins');
+    const cdSecs = document.getElementById('cd-secs');
+
+    if (!cdDays || !cdHours || !cdMins || !cdSecs) return;
+
+    // Set countdown target to upcoming session: 6 days, 14 hours from now
+    const now = new Date();
+    let target = new Date(now.getFullYear(), 9, 4, 10, 0, 0);
+    if (target.getTime() <= now.getTime()) {
+      target = new Date(now.getTime() + (6 * 24 * 60 * 60 * 1000) + (14 * 60 * 60 * 1000) + (32 * 60 * 1000));
+    }
+
+    const update = () => {
+      const diff = Math.max(0, target.getTime() - Date.now());
+      const d = Math.floor(diff / (1000 * 60 * 60 * 24));
+      const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+      const s = Math.floor((diff % (1000 * 60)) / 1000);
+
+      cdDays.innerText = String(d).padStart(2, '0');
+      cdHours.innerText = String(h).padStart(2, '0');
+      cdMins.innerText = String(m).padStart(2, '0');
+      cdSecs.innerText = String(s).padStart(2, '0');
+    };
+
+    update();
+    setInterval(update, 1000);
+  },
+
+  initVipCard3D() {
+    const card = document.getElementById('vip-card-3d');
+    const shine = document.getElementById('vip-card-shine');
+    if (!card) return;
+
+    card.addEventListener('mousemove', (e) => {
+      const rect = card.getBoundingClientRect();
+      const x = e.clientX - rect.left;
+      const y = e.clientY - rect.top;
+
+      const centerX = rect.width / 2;
+      const centerY = rect.height / 2;
+
+      const rotateX = ((y - centerY) / centerY) * -12;
+      const rotateY = ((x - centerX) / centerX) * 14;
+
+      card.style.transform = `perspective(1000px) rotateX(${rotateX.toFixed(2)}deg) rotateY(${rotateY.toFixed(2)}deg) translateY(-4px)`;
+
+      if (shine) {
+        const shinePercent = (x / rect.width) * 100;
+        shine.style.left = `${(shinePercent * 1.5) - 80}%`;
+        shine.style.opacity = '1';
+      }
+    });
+
+    card.addEventListener('mouseleave', () => {
+      card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
+      if (shine) {
+        shine.style.opacity = '0';
+      }
+    });
+  },
+
+  audioContext: null,
+  soundscapeNodes: null,
+  isAudioPlaying: false,
+
+  initSoundscape() {
+    const toggleBtn = document.getElementById('soundscape-toggle');
+    if (!toggleBtn) return;
+
+    toggleBtn.addEventListener('click', () => {
+      if (!this.audioContext) {
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtx) {
+          this.showToast('Web Audio is not supported in this browser.', 'error');
+          return;
+        }
+        this.audioContext = new AudioCtx();
+      }
+
+      if (this.audioContext.state === 'suspended') {
+        this.audioContext.resume();
+      }
+
+      if (this.isAudioPlaying) {
+        this.stopSoundscape();
+        toggleBtn.classList.remove('playing');
+        this.isAudioPlaying = false;
+        this.showToast('Studio Lounge Ambient Audio: OFF');
+      } else {
+        this.startSoundscape();
+        toggleBtn.classList.add('playing');
+        this.isAudioPlaying = true;
+        this.showToast('Studio Lounge Ambient Audio: ON (Lo-Fi Vinyl Vibes)');
+      }
+    });
+  },
+
+  startSoundscape() {
+    if (!this.audioContext) return;
+    const ctx = this.audioContext;
+    const now = ctx.currentTime;
+
+    const masterGain = ctx.createGain();
+    masterGain.gain.setValueAtTime(0.001, now);
+    masterGain.gain.exponentialRampToValueAtTime(0.06, now + 1.2);
+    masterGain.connect(ctx.destination);
+
+    // Warm lowpass filter for velvet lounge texture
+    const filter = ctx.createBiquadFilter();
+    filter.type = 'lowpass';
+    filter.frequency.setValueAtTime(320, now);
+    filter.connect(masterGain);
+
+    // Rich harmonic chord: A minor 9th (A2, C3, E3, G3, B3)
+    const freqs = [110, 130.81, 164.81, 196.00, 246.94];
+    const oscs = [];
+
+    freqs.forEach((freq, idx) => {
+      const osc = ctx.createOscillator();
+      osc.type = idx % 2 === 0 ? 'sine' : 'triangle';
+      osc.frequency.setValueAtTime(freq, now);
+      osc.detune.setValueAtTime((idx - 2) * 5, now);
+
+      const oscGain = ctx.createGain();
+      oscGain.gain.setValueAtTime(0.18 / freqs.length, now);
+
+      osc.connect(oscGain);
+      oscGain.connect(filter);
+      osc.start(now);
+      oscs.push(osc);
+    });
+
+    this.soundscapeNodes = { masterGain, oscs };
+  },
+
+  stopSoundscape() {
+    if (!this.soundscapeNodes || !this.audioContext) return;
+    const { masterGain, oscs } = this.soundscapeNodes;
+    const now = this.audioContext.currentTime;
+
+    masterGain.gain.setValueAtTime(masterGain.gain.value, now);
+    masterGain.gain.exponentialRampToValueAtTime(0.0001, now + 0.6);
+
+    setTimeout(() => {
+      oscs.forEach(osc => {
+        try { osc.stop(); osc.disconnect(); } catch (e) {}
+      });
+      this.soundscapeNodes = null;
+    }, 650);
+  },
+
+  downloadCalendarFile() {
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Smart Studio Abuja//Production Booking//EN',
+      'BEGIN:VEVENT',
+      'UID:ss-abj-9041-' + Date.now() + '@smartstudio.ng',
+      'DTSTAMP:20261001T090000Z',
+      'DTSTART:20261004T090000Z',
+      'DTEND:20261004T120000Z',
+      'SUMMARY:Smart Studio Abuja - Signature Portrait Session',
+      'DESCRIPTION:VIP Studio Production Session at 4 Kabama Estate Layout, Abuja. Wardrobe and styling consultation included.',
+      'LOCATION:Smart Studio, 4 Kabama Estate Layout, Abuja, Nigeria',
+      'STATUS:CONFIRMED',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], { type: 'text/calendar;charset=utf-8' });
+    const link = document.createElement('a');
+    link.href = URL.createObjectURL(blob);
+    link.download = 'Smart_Studio_Shoot_Oct4.ics';
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    this.showToast('Shoot session calendar invite (.ics) downloaded!');
   },
 
   showToast(message, type = 'info') {

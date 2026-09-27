@@ -9,6 +9,7 @@ const ProofingModule = {
 
   init() {
     this.renderGallery();
+    this.initBeforeAfterSlider();
     this.bindEvents();
   },
 
@@ -168,5 +169,108 @@ const ProofingModule = {
       document.getElementById('lightbox-photo-caption').innerText = title;
       modal.classList.add('active');
     }
+  },
+
+  initBeforeAfterSlider() {
+    const slider = document.getElementById('ba-slider');
+    const afterWrapper = document.getElementById('ba-after-wrapper');
+    const afterImg = document.getElementById('ba-after-img');
+    const beforeImg = document.getElementById('ba-before-img');
+    const divider = document.getElementById('ba-divider');
+
+    if (!slider || !afterWrapper || !afterImg || !divider) return;
+
+    let isDragging = false;
+
+    const syncImgWidth = () => {
+      const rect = slider.getBoundingClientRect();
+      if (rect.width > 0) {
+        afterImg.style.width = rect.width + 'px';
+        afterImg.style.maxWidth = 'none';
+      }
+    };
+
+    const updateSlider = (clientX) => {
+      const rect = slider.getBoundingClientRect();
+      let pos = ((clientX - rect.left) / rect.width) * 100;
+      pos = Math.max(2, Math.min(98, pos));
+      afterWrapper.style.width = pos + '%';
+      divider.style.left = pos + '%';
+      syncImgWidth();
+    };
+
+    // Initial sync
+    syncImgWidth();
+    window.addEventListener('resize', syncImgWidth);
+
+    slider.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      updateSlider(e.clientX);
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!isDragging) return;
+      updateSlider(e.clientX);
+    });
+
+    window.addEventListener('mouseup', () => {
+      isDragging = false;
+    });
+
+    // Touch support for mobile devices
+    slider.addEventListener('touchstart', (e) => {
+      isDragging = true;
+      if (e.touches.length > 0) {
+        updateSlider(e.touches[0].clientX);
+      }
+    }, { passive: true });
+
+    window.addEventListener('touchmove', (e) => {
+      if (!isDragging || e.touches.length === 0) return;
+      updateSlider(e.touches[0].clientX);
+    }, { passive: true });
+
+    window.addEventListener('touchend', () => {
+      isDragging = false;
+    });
+
+    // Preset Pills
+    const presetPresets = {
+      portrait: {
+        url: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1400&q=80',
+        beforeFilter: 'saturate(0.68) contrast(0.85) brightness(0.92)',
+        afterFilter: 'saturate(1.2) contrast(1.12) brightness(1.04)'
+      },
+      cinematic: {
+        url: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=1400&q=80',
+        beforeFilter: 'saturate(0.7) contrast(0.9) brightness(0.9)',
+        afterFilter: 'saturate(1.25) contrast(1.18) hue-rotate(-5deg) brightness(1.05)'
+      },
+      editorial: {
+        url: 'https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=1400&q=80',
+        beforeFilter: 'saturate(0.65) contrast(0.85) brightness(0.92)',
+        afterFilter: 'saturate(1.25) contrast(1.15) brightness(1.06)'
+      }
+    };
+
+    document.querySelectorAll('.retouch-preset-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.retouch-preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const presetKey = btn.getAttribute('data-preset');
+        const config = presetPresets[presetKey] || presetPresets.portrait;
+
+        beforeImg.src = config.url;
+        afterImg.src = config.url;
+        beforeImg.style.filter = config.beforeFilter;
+        afterImg.style.filter = config.afterFilter;
+
+        // Reset divider to middle
+        afterWrapper.style.width = '50%';
+        divider.style.left = '50%';
+        syncImgWidth();
+      });
+    });
   }
 };
+

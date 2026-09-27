@@ -140,6 +140,17 @@
         </div>
 
         <div class="topbar-actions">
+          <!-- Studio Lounge Soundscape Toggle -->
+          <button class="soundscape-btn" id="soundscape-toggle" title="Play ambient studio lounge soundscape">
+            <span class="soundscape-waves">
+              <span class="bar bar-1"></span>
+              <span class="bar bar-2"></span>
+              <span class="bar bar-3"></span>
+              <span class="bar bar-4"></span>
+            </span>
+            <span class="soundscape-label">Studio Lounge</span>
+          </button>
+
           <!-- Role Switcher -->
           <div class="role-switch-pill" title="Toggle between Client portal and Studio Manager views">
             <button class="role-btn active" id="role-btn-client">Client View</button>
@@ -167,6 +178,60 @@
             <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
               <a href="#new-order" class="btn-gold" data-target-view="new-order">Order New Shoot</a>
               <a href="#proofing" class="btn-outline-gold" data-target-view="proofing">View Proofs (12)</a>
+            </div>
+          </div>
+
+          <!-- Live Shoot Countdown & Abuja Studio Atmosphere Bar -->
+          <div class="countdown-atmosphere-card">
+            <div class="countdown-block">
+              <div class="countdown-eyebrow">
+                <span class="pulse-dot"></span> NEXT STUDIO PRODUCTION COUNTDOWN
+              </div>
+              <div class="countdown-digits-grid">
+                <div class="countdown-unit">
+                  <span class="count-num" id="cd-days">06</span>
+                  <span class="count-label">DAYS</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                  <span class="count-num" id="cd-hours">14</span>
+                  <span class="count-label">HOURS</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                  <span class="count-num" id="cd-mins">32</span>
+                  <span class="count-label">MINUTES</span>
+                </div>
+                <span class="countdown-sep">:</span>
+                <div class="countdown-unit">
+                  <span class="count-num" id="cd-secs">48</span>
+                  <span class="count-label">SECONDS</span>
+                </div>
+              </div>
+              <div class="countdown-session-info">
+                <strong>Signature Portrait Session</strong> &bull; Order #SS-ABJ-9041 &bull; Saturday, Oct 4 &bull; 4 Kabama Estate, Abuja
+              </div>
+            </div>
+
+            <div class="atmosphere-block">
+              <div class="atmosphere-item">
+                <div class="atmo-icon">🌤️</div>
+                <div>
+                  <div class="atmo-val">Abuja &bull; 29°C Clear Skies</div>
+                  <div class="atmo-sub">Diffused Natural Skylight Active</div>
+                </div>
+              </div>
+              <div class="atmosphere-item">
+                <div class="atmo-icon">🟢</div>
+                <div>
+                  <div class="atmo-val">Stage 1 Cyclorama: Ready</div>
+                  <div class="atmo-sub">Profoto B10X Strobes Calibrated</div>
+                </div>
+              </div>
+              <div class="atmo-actions">
+                <button class="btn-outline-gold atmo-btn" id="btn-sync-calendar">📅 Sync to Calendar</button>
+                <button class="btn-dark atmo-btn" id="btn-shoot-prep-guide">📋 Shoot Checklist</button>
+              </div>
             </div>
           </div>
 
@@ -547,6 +612,42 @@
             </div>
           </div>
 
+          <!-- Master Retouch Comparison Slider Showcase -->
+          <div class="retouch-comparison-card">
+            <div class="retouch-comp-header">
+              <div>
+                <span class="section-gold-tag">STUDIO ARTISTRY SHOWCASE</span>
+                <h2 style="font-size: 1.8rem; color: var(--app-ivory); margin-top: 0.2rem;">
+                  Interactive Retouch &amp; Color Grading Suite
+                </h2>
+                <p style="color: var(--app-gray); font-size: 0.88rem; max-width: 650px;">
+                  Drag the golden handle to compare raw uncompressed sensor capture against Smart Studio's signature high-fashion skin grading, micro-contrast &amp; magazine finish.
+                </p>
+              </div>
+              <div class="retouch-preset-pills">
+                <button class="retouch-preset-btn active" data-preset="portrait">Signature Portrait</button>
+                <button class="retouch-preset-btn" data-preset="cinematic">Cinematic Moody</button>
+                <button class="retouch-preset-btn" data-preset="editorial">High-Fashion Editorial</button>
+              </div>
+            </div>
+
+            <div class="ba-slider-container" id="ba-slider">
+              <div class="ba-image-wrapper ba-before">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1400&q=80" alt="Raw Studio Capture" id="ba-before-img">
+                <span class="ba-tag ba-tag-before">RAW SENSOR (FLAT)</span>
+              </div>
+              <div class="ba-image-wrapper ba-after" id="ba-after-wrapper">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1400&q=80" alt="Master Retouch" id="ba-after-img">
+                <span class="ba-tag ba-tag-after">✨ MASTER RETOUCH</span>
+              </div>
+              <div class="ba-divider" id="ba-divider">
+                <div class="ba-handle">
+                  <span>&#9664; &#9654;</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
           <!-- Proofing Filter Tabs -->
           <div class="proofing-filter-tabs">
             <button class="proofing-filter-btn active" data-filter="all">All Photos (12)</button>
@@ -626,84 +727,154 @@
         <section class="app-view-panel" data-view="profile" style="display: none;">
           <div style="margin-bottom: 2rem;">
             <span style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
-              ACCOUNT SETTINGS
+              ACCOUNT SETTINGS &bull; MEMBERSHIP
             </span>
-            <h1 style="font-size: 2.4rem; color: var(--app-ivory);">Client Profile</h1>
+            <h1 style="font-size: 2.4rem; color: var(--app-ivory);">Client Profile &amp; VIP Pass</h1>
+            <p style="color: var(--app-gray);">Manage your verified studio credentials, VIP benefits pass, and portrait profile image.</p>
           </div>
 
-          <div style="background-color: var(--app-card); border: 1px solid var(--app-border); border-top: 3px solid var(--app-gold); padding: 2.5rem; border-radius: 4px; max-width: 680px;">
-            
-            <!-- Avatar Header with Interactive Upload Button -->
-            <div style="display: flex; align-items: center; gap: 2rem; margin-bottom: 2.5rem; padding-bottom: 2rem; border-bottom: 1px solid var(--app-border); flex-wrap: wrap;">
-              <div style="position: relative; width: 100px; height: 100px; flex-shrink: 0; cursor: pointer;" id="avatar-click-zone" title="Click to upload profile photo">
-                <img src="" alt="Profile Photo" id="profile-view-avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--app-gold); box-shadow: 0 4px 20px var(--app-gold-glow);">
-                <div style="position: absolute; bottom: 0; right: 0; width: 32px; height: 32px; border-radius: 50%; background-color: var(--app-gold); color: #000; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.5);">
-                  📷
+          <div class="profile-grid-layout">
+            <!-- Left Column: 3D Holographic Metal VIP Membership Card -->
+            <div>
+              <div class="vip-card-perspective">
+                <div class="vip-metal-card" id="vip-card-3d">
+                  <div class="vip-card-shine" id="vip-card-shine"></div>
+                  
+                  <div class="vip-card-header">
+                    <div>
+                      <div class="vip-brand-name">SMART STUDIO</div>
+                      <div style="font-size: 0.58rem; letter-spacing: 0.25em; color: var(--app-gold); font-weight: 700;">BLACK CONCIERGE ACCESS</div>
+                    </div>
+                    <div class="vip-card-chip" title="Studio EMV Security Chip"></div>
+                  </div>
+
+                  <div class="vip-card-body">
+                    <div class="vip-card-avatar-halo">
+                      <div class="vip-avatar-pulse"></div>
+                      <img src="" alt="VIP Client" id="vip-card-avatar-img">
+                    </div>
+                    <div>
+                      <div class="vip-card-number">&bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 9041</div>
+                      <div class="vip-card-tier" id="vip-card-tier-text">VIP CREATIVE CLIENT</div>
+                    </div>
+                  </div>
+
+                  <div class="vip-card-footer">
+                    <div>
+                      <div class="vip-holder-label">CARDHOLDER NAME</div>
+                      <div class="vip-holder-name" id="vip-card-holder-name">Samuel Adekunle</div>
+                    </div>
+                    <div>
+                      <div class="vip-card-location">ABUJA STUDIO</div>
+                      <div style="font-size: 0.58rem; color: var(--app-gray); text-align: right;">EXP 10/28</div>
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div style="flex-grow: 1;">
-                <h3 style="font-size: 1.6rem; color: var(--app-ivory);" id="profile-display-name">Samuel Adekunle</h3>
-                <span class="status-badge status-completed" id="profile-display-badge" style="margin: 0.3rem 0 0.8rem; display: inline-flex;">VIP Creative Client</span>
-                <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
-                  <button type="button" class="btn-gold" id="btn-trigger-upload" style="padding: 0.5rem 1.1rem; font-size: 0.75rem;">
-                    Upload Photo
+              <!-- VIP Studio Privileges -->
+              <div class="vip-perks-box">
+                <div class="vip-perks-title">YOUR EXCLUSIVE CLIENT PRIVILEGES</div>
+                <div class="vip-perk-item">
+                  <span class="vip-perk-icon">👑</span>
+                  <div>
+                    <strong style="color: var(--app-ivory);">Private Dressing Suite:</strong> Complimentary access to VIP dressing room &amp; makeup vanity.
+                  </div>
+                </div>
+                <div class="vip-perk-item">
+                  <span class="vip-perk-icon">⚡</span>
+                  <div>
+                    <strong style="color: var(--app-ivory);">48-Hour Priority Retouch:</strong> Expedited post-production delivery queue.
+                  </div>
+                </div>
+                <div class="vip-perk-item">
+                  <span class="vip-perk-icon">☕</span>
+                  <div>
+                    <strong style="color: var(--app-ivory);">Studio Concierge Lounge:</strong> Complimentary artisan espresso, drinks &amp; high-speed Wi-Fi.
+                  </div>
+                </div>
+                <div class="vip-perk-item">
+                  <span class="vip-perk-icon">🖼️</span>
+                  <div>
+                    <strong style="color: var(--app-ivory);">15% Fine-Art Privilege:</strong> Preferred discount on acrylic &amp; canvas wall frames.
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Profile Picture Management & Account Details -->
+            <div style="background-color: var(--app-card); border: 1px solid var(--app-border); border-top: 3px solid var(--app-gold); padding: 2.2rem; border-radius: 4px;">
+              <!-- Avatar Header with Interactive Upload Button -->
+              <div style="display: flex; align-items: center; gap: 1.8rem; margin-bottom: 2rem; padding-bottom: 1.8rem; border-bottom: 1px solid var(--app-border); flex-wrap: wrap;">
+                <div style="position: relative; width: 90px; height: 90px; flex-shrink: 0; cursor: pointer;" id="avatar-click-zone" title="Click to upload profile photo">
+                  <img src="" alt="Profile Photo" id="profile-view-avatar" style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 3px solid var(--app-gold); box-shadow: 0 4px 20px var(--app-gold-glow);">
+                  <div style="position: absolute; bottom: 0; right: 0; width: 30px; height: 30px; border-radius: 50%; background-color: var(--app-gold); color: #000; display: flex; align-items: center; justify-content: center; font-size: 0.85rem; font-weight: bold; box-shadow: 0 2px 8px rgba(0,0,0,0.5);">
+                    📷
+                  </div>
+                </div>
+
+                <div style="flex-grow: 1;">
+                  <h3 style="font-size: 1.5rem; color: var(--app-ivory);" id="profile-display-name">Samuel Adekunle</h3>
+                  <span class="status-badge status-completed" id="profile-display-badge" style="margin: 0.2rem 0 0.8rem; display: inline-flex;">VIP Creative Client</span>
+                  <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;">
+                    <button type="button" class="btn-gold" id="btn-trigger-upload" style="padding: 0.45rem 1rem; font-size: 0.74rem;">
+                      Upload Photo
+                    </button>
+                    <button type="button" class="btn-dark" id="btn-toggle-presets" style="padding: 0.45rem 1rem; font-size: 0.74rem;">
+                      Choose Preset
+                    </button>
+                  </div>
+                  <!-- Hidden Native File Input -->
+                  <input type="file" id="profile-file-input" accept="image/*" style="display: none;">
+                </div>
+              </div>
+
+              <!-- Avatar Presets Drawer (Collapsible) -->
+              <div id="avatar-presets-drawer" style="display: none; background-color: var(--app-surface); border: 1px solid var(--app-border); padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
+                <div style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gold); font-weight: 700; margin-bottom: 0.8rem;">
+                  Select Studio Avatar Preset
+                </div>
+                <div style="display: flex; gap: 0.8rem; flex-wrap: wrap;" id="preset-avatars-list">
+                  <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Studio Classic Male">
+                  <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Editorial Female">
+                  <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Luxury African Portrait">
+                  <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=200&q=80" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Tailored Male">
+                  <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" style="width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Corporate Executive">
+                </div>
+
+                <div style="display: flex; gap: 0.6rem; margin-top: 1.2rem;">
+                  <input type="url" id="custom-avatar-url" placeholder="Or paste image URL (e.g. https://...)" style="flex: 1; padding: 0.6rem 0.8rem; font-size: 0.82rem; background-color: var(--app-card); border: 1px solid var(--app-border); color: #fff;">
+                  <button type="button" class="btn-gold" id="btn-apply-avatar-url" style="padding: 0.6rem 1rem; font-size: 0.75rem;">Apply Link</button>
+                </div>
+              </div>
+
+              <!-- Profile Details Form -->
+              <form id="profile-edit-form" style="display: flex; flex-direction: column; gap: 1.2rem;">
+                <div>
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Full Name</label>
+                  <input type="text" id="profile-input-name" value="Samuel Adekunle" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <div>
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Email Address</label>
+                  <input type="email" id="profile-input-email" value="client@smartstudio.ng" readonly style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: var(--app-gray); cursor: not-allowed;">
+                </div>
+
+                <div>
+                  <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Phone Number</label>
+                  <input type="tel" id="profile-input-phone" value="09027462645" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--app-border);">
+                  <button type="submit" class="btn-gold" style="padding: 0.75rem 1.6rem;">
+                    Save Profile Changes
                   </button>
-                  <button type="button" class="btn-dark" id="btn-toggle-presets" style="padding: 0.5rem 1.1rem; font-size: 0.75rem;">
-                    Choose Preset
+                  <button type="button" class="btn-dark btn-logout" style="color: #EF4444; border-color: rgba(239, 68, 68, 0.4);">
+                    Sign Out
                   </button>
                 </div>
-                <!-- Hidden Native File Input -->
-                <input type="file" id="profile-file-input" accept="image/*" style="display: none;">
-              </div>
+              </form>
             </div>
-
-            <!-- Avatar Presets Drawer (Collapsible) -->
-            <div id="avatar-presets-drawer" style="display: none; background-color: var(--app-surface); border: 1px solid var(--app-border); padding: 1.5rem; border-radius: 4px; margin-bottom: 2rem;">
-              <div style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gold); font-weight: 700; margin-bottom: 0.8rem;">
-                Select Studio Avatar Preset
-              </div>
-              <div style="display: flex; gap: 1rem; flex-wrap: wrap;" id="preset-avatars-list">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Studio Classic Male">
-                <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Editorial Female">
-                <img src="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1531746020798-e6953c6e8e04?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Luxury African Portrait">
-                <img src="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1583863788434-e58a36330cf0?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Tailored Male">
-                <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" class="preset-avatar-option" data-url="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80" style="width: 52px; height: 52px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid transparent;" title="Corporate Executive">
-              </div>
-
-              <!-- Or Paste URL input -->
-              <div style="display: flex; gap: 0.6rem; margin-top: 1.2rem;">
-                <input type="url" id="custom-avatar-url" placeholder="Or paste image URL (e.g. https://...)" style="flex: 1; padding: 0.6rem 0.8rem; font-size: 0.82rem; background-color: var(--app-card); border: 1px solid var(--app-border); color: #fff;">
-                <button type="button" class="btn-gold" id="btn-apply-avatar-url" style="padding: 0.6rem 1rem; font-size: 0.75rem;">Apply Link</button>
-              </div>
-            </div>
-
-            <!-- Profile Details Form -->
-            <form id="profile-edit-form" style="display: flex; flex-direction: column; gap: 1.2rem;">
-              <div>
-                <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Full Name</label>
-                <input type="text" id="profile-input-name" value="Samuel Adekunle" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
-              </div>
-
-              <div>
-                <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Email Address</label>
-                <input type="email" id="profile-input-email" value="client@smartstudio.ng" readonly style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: var(--app-gray); cursor: not-allowed;">
-              </div>
-
-              <div>
-                <label style="display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.4rem;">Phone Number</label>
-                <input type="tel" id="profile-input-phone" value="09027462645" required style="width: 100%; padding: 0.85rem; background-color: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
-              </div>
-
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 1.5rem; padding-top: 1.5rem; border-top: 1px solid var(--app-border);">
-                <button type="submit" class="btn-gold" style="padding: 0.75rem 1.6rem;">
-                  Save Profile Changes
-                </button>
-                <button type="button" class="btn-dark btn-logout" style="color: #EF4444; border-color: rgba(239, 68, 68, 0.4);">
-                  Sign Out
-                </button>
-              </div>
-            </form>
           </div>
         </section>
 
@@ -859,6 +1030,68 @@
       <button class="app-modal-close" style="position: absolute; top: -3rem; right: 0; color: #fff; font-size: 2.5rem;">&times;</button>
       <img id="lightbox-full-img" src="" alt="Proof Preview" style="max-width: 100%; max-height: 80vh; object-fit: contain; box-shadow: 0 20px 60px rgba(0,0,0,0.9); border: 1px solid rgba(255,255,255,0.1);">
       <div id="lightbox-photo-caption" style="font-family: var(--font-serif); font-size: 1.4rem; color: var(--app-gold); margin-top: 1rem;"></div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 4: SHOOT PREP & CHECKLIST MODAL
+       ======================================================================== -->
+  <div class="app-modal-backdrop" id="prep-checklist-modal" role="dialog" aria-modal="true">
+    <div class="app-modal-box" style="max-width: 620px;">
+      <button class="app-modal-close" style="position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.8rem;">&times;</button>
+      <div style="border-bottom: 1px solid var(--app-border); padding-bottom: 1rem; margin-bottom: 1.5rem;">
+        <span style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+          STUDIO CONCIERGE GUIDE
+        </span>
+        <h2 style="font-size: 1.8rem; color: var(--app-ivory); margin-top: 0.2rem;">Client Shoot Preparation Checklist</h2>
+        <p style="color: var(--app-gray); font-size: 0.85rem;">Essential steps to ensure your Smart Studio production session runs smoothly and flawlessly.</p>
+      </div>
+
+      <div style="display: flex; flex-direction: column; gap: 1.2rem;">
+        <div style="display: flex; gap: 1rem; background: var(--app-surface); padding: 1.1rem; border-radius: 4px; border-left: 3px solid var(--app-gold);">
+          <span style="font-size: 1.4rem;">👔</span>
+          <div>
+            <strong style="color: var(--app-ivory); font-size: 0.95rem;">Wardrobe &amp; Outfits</strong>
+            <p style="font-size: 0.82rem; color: var(--app-gray); margin-top: 0.2rem;">
+              Bring 2–3 pressed changes on hangers. Solid, rich tones photograph best on our Cyclorama. Avoid tight, distracting micro-patterns.
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; background: var(--app-surface); padding: 1.1rem; border-radius: 4px; border-left: 3px solid var(--app-gold);">
+          <span style="font-size: 1.4rem;">💄</span>
+          <div>
+            <strong style="color: var(--app-ivory); font-size: 0.95rem;">Hair &amp; Makeup (MUA)</strong>
+            <p style="font-size: 0.82rem; color: var(--app-gray); margin-top: 0.2rem;">
+              If in-house MUA is booked, arrive with a clean, freshly moisturized face 30 minutes before your shoot. Bring your preferred lip shade for touchups.
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; background: var(--app-surface); padding: 1.1rem; border-radius: 4px; border-left: 3px solid var(--app-gold);">
+          <span style="font-size: 1.4rem;">👟</span>
+          <div>
+            <strong style="color: var(--app-ivory); font-size: 0.95rem;">Clean Footwear for Cyclorama</strong>
+            <p style="font-size: 0.82rem; color: var(--app-gray); margin-top: 0.2rem;">
+              To protect the pristine seamless white floor curve, wipe outdoor shoe soles thoroughly or bring indoor-only footwear.
+            </p>
+          </div>
+        </div>
+
+        <div style="display: flex; gap: 1rem; background: var(--app-surface); padding: 1.1rem; border-radius: 4px; border-left: 3px solid var(--app-gold);">
+          <span style="font-size: 1.4rem;">🎵</span>
+          <div>
+            <strong style="color: var(--app-ivory); font-size: 0.95rem;">Music &amp; Studio Atmosphere</strong>
+            <p style="font-size: 0.82rem; color: var(--app-gray); margin-top: 0.2rem;">
+              Our studio features Bluetooth surround sound throughout. Feel free to connect your Spotify/Apple Music playlist upon arrival!
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div style="margin-top: 1.8rem; text-align: right;">
+        <button class="btn-gold app-modal-close" style="padding: 0.6rem 1.4rem;">Got It, Ready for Shoot!</button>
+      </div>
     </div>
   </div>
 
