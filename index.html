@@ -76,6 +76,14 @@
             <span class="sidebar-badge">12 Ready</span>
           </a>
 
+          <a href="#reviews" class="app-nav-item" data-target-view="reviews">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+            </svg>
+            <span>Reviews &amp; Ratings</span>
+            <span class="sidebar-badge" style="background-color: var(--app-gold); color: #000; font-weight: 700;">5.0 ★</span>
+          </a>
+
           <a href="#profile" class="app-nav-item" data-target-view="profile">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
@@ -471,10 +479,12 @@
                 </div>
               </div>
 
-              <!-- STEP 4: CHECKOUT & CONFIRMATION -->
+              <!-- STEP 4: CHECKOUT & PAYMENT METHOD -->
               <div class="wizard-step-panel" data-step-panel="4" style="display: none;">
-                <h3 style="font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--app-ivory);">Review Booking Details</h3>
-                <div style="background-color: var(--app-card); border: 1px solid var(--app-border); padding: 2rem; border-radius: 4px; display: flex; flex-direction: column; gap: 1.2rem;">
+                <h3 style="font-size: 1.4rem; margin-bottom: 1.5rem; color: var(--app-ivory);">Review Booking &amp; Select Payment</h3>
+                
+                <!-- Client & Session Confirmation Summary -->
+                <div style="background-color: var(--app-card); border: 1px solid var(--app-border); padding: 1.8rem; border-radius: 4px; display: flex; flex-direction: column; gap: 1.2rem; margin-bottom: 2rem;">
                   <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; border-bottom: 1px solid var(--app-border); padding-bottom: 1.2rem;">
                     <div>
                       <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Client Name</span>
@@ -501,14 +511,104 @@
                     <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Creative Notes</span>
                     <p id="review-shoot-notes" style="font-size: 0.9rem; color: var(--app-ivory-dim); margin-top: 0.2rem;">-</p>
                   </div>
+                </div>
 
-                  <div style="background-color: var(--app-surface); padding: 1.2rem; border-left: 3px solid var(--app-gold); margin-top: 0.5rem;">
-                    <div style="font-size: 0.85rem; font-weight: 600; color: var(--app-gold);">Payment Guarantee</div>
-                    <p style="font-size: 0.78rem; color: var(--app-gray); margin-top: 0.2rem;">
-                      Your slot will be reserved immediately upon submission. You may pay your deposit online via Paystack or at the studio counter via POS on arrival.
-                    </p>
+                <!-- Payment Plan Selection (Full vs 50% Deposit) -->
+                <div style="margin-bottom: 2rem;">
+                  <div style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gold); font-weight: 700; margin-bottom: 0.8rem;">
+                    1. Choose Payment Plan
+                  </div>
+                  <div class="payment-plans-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="payment-plan-pill active" data-plan="full">
+                      <div class="plan-radio-dot"></div>
+                      <div>
+                        <div class="plan-pill-title">100% Full Payment</div>
+                        <div class="plan-pill-desc">Pay full package upfront. Priority post-production &amp; instant calendar locking.</div>
+                      </div>
+                    </div>
+
+                    <div class="payment-plan-pill" data-plan="deposit">
+                      <div class="plan-radio-dot"></div>
+                      <div>
+                        <div class="plan-pill-title">50% VIP Retainer Deposit</div>
+                        <div class="plan-pill-desc">Secure slot &amp; photography crew today. Pay remaining 50% on shoot day.</div>
+                      </div>
+                    </div>
                   </div>
                 </div>
+
+                <!-- Multiple Payment Methods Grid -->
+                <div style="margin-bottom: 2rem;">
+                  <div style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gold); font-weight: 700; margin-bottom: 0.8rem;">
+                    2. Select Preferred Payment Method
+                  </div>
+                  <div class="payment-methods-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem;">
+                    
+                    <!-- Method 1: Paystack Online Card / USSD -->
+                    <div class="payment-method-card active" data-method="paystack">
+                      <div class="method-card-badge">Instant</div>
+                      <div class="method-card-icon">💳</div>
+                      <div class="method-card-name">Debit Card / Paystack</div>
+                      <div class="method-card-desc">Mastercard, Visa, Verve, Apple Pay &amp; USSD online payment.</div>
+                      <div class="method-brand-logos">
+                        <span>VISA</span> • <span>Mastercard</span> • <span>Verve</span>
+                      </div>
+                    </div>
+
+                    <!-- Method 2: Direct Bank Wire / GTBank -->
+                    <div class="payment-method-card" data-method="bank">
+                      <div class="method-card-badge">Direct Wire</div>
+                      <div class="method-card-icon">🏦</div>
+                      <div class="method-card-name">Direct Bank Transfer</div>
+                      <div class="method-card-desc">Guaranty Trust Bank (GTB) corporate studio account with 1-click details.</div>
+                      <div class="method-brand-logos">
+                        <span>GTBank</span> • <span>Zenith</span> • <span>Instant Alert</span>
+                      </div>
+                    </div>
+
+                    <!-- Method 3: Studio POS / Cash on Arrival -->
+                    <div class="payment-method-card" data-method="pos">
+                      <div class="method-card-badge">At Studio</div>
+                      <div class="method-card-icon">🏪</div>
+                      <div class="method-card-name">Studio POS / Cash</div>
+                      <div class="method-card-desc">Reserve date now &amp; swipe your card at our Abuja reception desk on arrival.</div>
+                      <div class="method-brand-logos">
+                        <span>Reception POS</span> • <span>Cash Desk</span>
+                      </div>
+                    </div>
+
+                    <!-- Method 4: USDT / Crypto TRC20 -->
+                    <div class="payment-method-card" data-method="crypto">
+                      <div class="method-card-badge">Web3 / VIP</div>
+                      <div class="method-card-icon">🪙</div>
+                      <div class="method-card-name">USDT (Crypto TRC20)</div>
+                      <div class="method-card-desc">For international clients, diaspora bookings, and Web3 creators.</div>
+                      <div class="method-brand-logos">
+                        <span>USDT TRC20</span> • <span>Binance</span> • <span>Bybit</span>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Live Payment Breakdown Box -->
+                <div style="background-color: var(--app-surface); border: 1px solid var(--app-border); border-left: 4px solid var(--app-gold); padding: 1.4rem; border-radius: 4px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+                  <div>
+                    <div style="font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+                      PAYMENT BREAKDOWN
+                    </div>
+                    <div style="font-size: 0.85rem; color: var(--app-ivory); margin-top: 0.2rem;">
+                      Due Today: <strong id="checkout-due-now" style="color: var(--app-gold); font-size: 1.25rem; font-family: var(--font-serif); margin-left: 0.3rem;">₦0</strong>
+                    </div>
+                    <div style="font-size: 0.75rem; color: var(--app-gray); margin-top: 0.1rem;">
+                      Balance Due on Shoot Day: <span id="checkout-balance-remaining" style="color: var(--app-ivory); font-weight: 600;">₦0</span>
+                    </div>
+                  </div>
+                  <div style="font-size: 0.75rem; color: var(--app-gray); text-align: right; max-width: 280px;">
+                    🔒 All transactions encrypted &amp; verified with official digital VAT invoice.
+                  </div>
+                </div>
+
               </div>
 
               <!-- Wizard Nav Controls -->
@@ -718,6 +818,69 @@
                 <!-- Dynamically rendered by admin.js -->
               </tbody>
             </table>
+          </div>
+        </section>
+
+        <!-- ==================================================================
+             VIEW: CLIENT REVIEWS & STUDIO EXPERIENCE
+             ================================================================== -->
+        <section class="app-view-panel" data-view="reviews" style="display: none;">
+          <div style="display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2rem; flex-wrap: wrap; gap: 1.5rem;">
+            <div>
+              <span style="font-size: 0.75rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+                TESTIMONIALS &bull; REPUTATION &bull; ABUJA
+              </span>
+              <h1 style="font-size: 2.4rem; color: var(--app-ivory); margin-top: 0.2rem;">Client Reviews &amp; Feedback</h1>
+              <p style="color: var(--app-gray); max-width: 650px;">
+                Read verified shoot testimonials from executives, fashion creators, and couples. Share your own studio experience to help fellow clients.
+              </p>
+            </div>
+            <div>
+              <button class="btn-gold" onclick="ReviewsModule.openReviewModal()" style="padding: 0.8rem 1.6rem; font-size: 0.85rem; box-shadow: 0 4px 20px var(--app-gold-glow);">
+                ★ Write a Review / Share Feedback
+              </button>
+            </div>
+          </div>
+
+          <!-- Studio Trust & Rating Statistics Ribbon -->
+          <div class="reviews-stats-ribbon">
+            <div class="rev-stat-item">
+              <div class="rev-stat-number" id="reviews-avg-rating">5.0</div>
+              <div class="rev-stat-stars">★★★★★</div>
+              <div class="rev-stat-label" id="reviews-total-count">Verified Client Rating</div>
+            </div>
+
+            <div class="rev-stat-item">
+              <div class="rev-stat-number">100%</div>
+              <div class="rev-stat-icon-text">🏆 VIP Standards</div>
+              <div class="rev-stat-label" id="reviews-satisfaction-rate">Satisfaction Guaranteed</div>
+            </div>
+
+            <div class="rev-stat-item">
+              <div class="rev-stat-number">48H</div>
+              <div class="rev-stat-icon-text">⚡ Rapid Turnaround</div>
+              <div class="rev-stat-label">Fast Proofing Gallery Delivery</div>
+            </div>
+
+            <div class="rev-stat-item">
+              <div class="rev-stat-number">PRO</div>
+              <div class="rev-stat-icon-text">✨ White Cyclorama</div>
+              <div class="rev-stat-label">Swiss Elinchrom &amp; Profoto Setup</div>
+            </div>
+          </div>
+
+          <!-- Review Category Filter Bar -->
+          <div class="reviews-filter-bar">
+            <button class="review-cat-pill active" data-category="all">All Experiences</button>
+            <button class="review-cat-pill" data-category="portrait">Portraits &amp; Headshots</button>
+            <button class="review-cat-pill" data-category="wedding">Weddings &amp; Couples</button>
+            <button class="review-cat-pill" data-category="corporate">Corporate &amp; Executive</button>
+            <button class="review-cat-pill" data-category="creative">Creative &amp; Fashion</button>
+          </div>
+
+          <!-- Reviews Dynamic Grid -->
+          <div class="reviews-grid-layout" id="reviews-list-container">
+            <!-- Dynamically populated by reviews.js -->
           </div>
         </section>
 
@@ -967,7 +1130,7 @@
         <p style="font-size: 0.8rem; color: var(--app-gray); margin-top: 0.3rem;">4 Kabama Estate Layout, Abuja &bull; Phone: 09027462645</p>
       </div>
 
-      <div style="display: flex; justify-content: space-between; margin-bottom: 1.5rem;">
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.5rem;">
         <div>
           <span style="font-size: 0.72rem; color: var(--app-gray); text-transform: uppercase;">Invoice Number</span>
           <div id="receipt-order-id" style="font-weight: 700; color: var(--app-gold);">SS-ABJ-0000</div>
@@ -978,25 +1141,300 @@
         </div>
       </div>
 
-      <div style="background-color: var(--app-surface); border: 1px solid var(--app-border); padding: 1.2rem; border-radius: 4px; margin-bottom: 1.5rem;">
+      <div style="background-color: var(--app-surface); border: 1px solid var(--app-border); padding: 1.2rem; border-radius: 4px; margin-bottom: 1.2rem;">
         <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
           <strong id="receipt-service-title">Portrait Signature Session</strong>
-          <span style="color: var(--app-gold);">Confirmed</span>
+          <span id="receipt-payment-badge" class="status-badge status-completed">PAID IN FULL</span>
         </div>
         <div style="font-size: 0.8rem; color: var(--app-gray);" id="receipt-shoot-datetime">
           October 12, 2026 at 10:00 AM
         </div>
       </div>
 
+      <!-- Payment Breakdown in Receipt -->
+      <div style="background-color: var(--app-card); border: 1px solid var(--app-border); padding: 1rem 1.2rem; border-radius: 4px; margin-bottom: 1.5rem; display: flex; flex-direction: column; gap: 0.6rem; font-size: 0.85rem;">
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: var(--app-gray);">Payment Channel:</span>
+          <span id="receipt-payment-method" style="color: var(--app-ivory); font-weight: 600;">Paystack Online</span>
+        </div>
+        <div style="display: flex; justify-content: space-between;">
+          <span style="color: var(--app-gray);">Amount Paid Today:</span>
+          <span id="receipt-amount-paid" style="color: var(--app-gold); font-weight: 700;">₦0</span>
+        </div>
+        <div style="display: flex; justify-content: space-between; border-top: 1px solid var(--app-border); padding-top: 0.5rem;">
+          <span style="color: var(--app-gray);">Balance Due on Shoot Day:</span>
+          <span id="receipt-balance-remaining" style="color: var(--app-ivory); font-weight: 600;">₦0</span>
+        </div>
+      </div>
+
       <div style="display: flex; justify-content: space-between; align-items: baseline; font-size: 1.4rem; font-weight: 700; border-top: 1px solid var(--app-border); padding-top: 1.2rem; margin-bottom: 2rem;">
-        <span>Total Amount</span>
+        <span>Total Session Fee</span>
         <span id="receipt-total-amount" style="font-family: var(--font-serif); color: var(--app-gold); font-size: 2rem;">₦0</span>
       </div>
 
       <div style="display: flex; gap: 1rem;">
-        <button class="btn-gold" style="flex: 1;" onclick="window.print()">Print Receipt</button>
+        <button class="btn-gold" style="flex: 1;" onclick="window.print()">Print Official Receipt</button>
         <button class="btn-dark app-modal-close" style="flex: 1;">Close</button>
       </div>
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 1B: INTERACTIVE MULTI-PAYMENT CHECKOUT MODAL
+       ======================================================================== -->
+  <div class="app-modal-backdrop" id="payment-checkout-modal" role="dialog" aria-modal="true">
+    <div class="app-modal-box" style="max-width: 580px;">
+      <button class="app-modal-close" style="position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.8rem;">&times;</button>
+      
+      <div style="text-align: center; border-bottom: 1px solid var(--app-border); padding-bottom: 1.2rem; margin-bottom: 1.5rem;">
+        <div style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+          SECURE CHECKOUT TERMINAL
+        </div>
+        <h2 style="font-size: 1.6rem; color: var(--app-ivory); margin-top: 0.3rem;">Complete Studio Booking</h2>
+        <div style="margin-top: 0.5rem; display: flex; justify-content: center; align-items: baseline; gap: 0.6rem;">
+          <span style="font-size: 0.85rem; color: var(--app-gray);">Order <strong id="pay-modal-order-id" style="color: #fff;">SS-ABJ-0000</strong>:</span>
+          <span id="pay-modal-amount-due" style="font-family: var(--font-serif); font-size: 1.8rem; color: var(--app-gold); font-weight: 700;">₦0</span>
+        </div>
+        <div id="pay-modal-plan-badge" style="font-size: 0.78rem; color: var(--app-ivory-dim); margin-top: 0.2rem;">
+          100% Full Payment
+        </div>
+      </div>
+
+      <!-- Payment Channel 1: Paystack Simulator -->
+      <div id="pay-panel-paystack" class="pay-method-content-panel" style="display: none;">
+        <div style="background: linear-gradient(135deg, #091e2f 0%, #03101c 100%); border: 1px solid #144062; border-radius: 8px; padding: 1.5rem; margin-bottom: 1.5rem; color: #fff;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1.2rem;">
+            <span style="font-weight: 700; letter-spacing: 0.1em; color: #00C3F7;">PAYSTACK CHECKOUT</span>
+            <span style="font-size: 0.75rem; background: rgba(0, 195, 247, 0.2); color: #00C3F7; padding: 0.2rem 0.6rem; border-radius: 4px;">SECURE 256-BIT</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.8rem;">
+            <div>
+              <label style="font-size: 0.72rem; text-transform: uppercase; color: #9AB3C7;">Card Number</label>
+              <div style="position: relative;">
+                <input type="text" value="5399 &bull;&bull;&bull;&bull; &bull;&bull;&bull;&bull; 8821" readonly style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff; font-family: monospace; letter-spacing: 0.1em;">
+                <span style="position: absolute; right: 12px; top: 10px; font-weight: 700; color: #EA001B;">Mastercard</span>
+              </div>
+            </div>
+
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+              <div>
+                <label style="font-size: 0.72rem; text-transform: uppercase; color: #9AB3C7;">Valid Thru</label>
+                <input type="text" value="08/29" readonly style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff;">
+              </div>
+              <div>
+                <label style="font-size: 0.72rem; text-transform: uppercase; color: #9AB3C7;">CVV</label>
+                <input type="password" value="•••" readonly style="width: 100%; padding: 0.75rem; background: rgba(255,255,255,0.08); border: 1px solid rgba(255,255,255,0.2); color: #fff;">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-gold" style="width: 100%; padding: 0.9rem; font-size: 0.95rem; font-weight: 700;" onclick="OrderingModule.confirmPaymentSimulation()">
+          ⚡ Authorize &amp; Pay via Paystack &rarr;
+        </button>
+      </div>
+
+      <!-- Payment Channel 2: Direct Bank Transfer (GTBank) -->
+      <div id="pay-panel-bank" class="pay-method-content-panel" style="display: none;">
+        <div style="background: var(--app-surface); border: 1px solid var(--app-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem; border-bottom: 1px solid var(--app-border); padding-bottom: 0.8rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <span style="font-size: 1.6rem;">🏦</span>
+              <div>
+                <div style="font-weight: 700; color: var(--app-ivory);">Guaranty Trust Bank (GTB)</div>
+                <div style="font-size: 0.72rem; color: var(--app-gray);">Instant Corporate Account</div>
+              </div>
+            </div>
+            <span class="status-badge status-completed">Active</span>
+          </div>
+
+          <div style="display: flex; flex-direction: column; gap: 0.8rem; font-size: 0.88rem;">
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="color: var(--app-gray);">Account Name:</span>
+              <strong style="color: var(--app-ivory);">Smart Studio Luxury Media Ltd</strong>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(212,175,55,0.08); padding: 0.7rem 0.9rem; border-radius: 4px; border: 1px dashed rgba(212,175,55,0.3);">
+              <div>
+                <span style="display: block; font-size: 0.7rem; color: var(--app-gold); text-transform: uppercase;">Account Number</span>
+                <strong id="gtb-acct-num" style="font-size: 1.2rem; letter-spacing: 0.1em; color: #fff; font-family: monospace;">0123456789</strong>
+              </div>
+              <button class="btn-dark" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;" onclick="OrderingModule.copyAccountDetails('0123456789', 'gtb-copy-status')">
+                <span id="gtb-copy-status">Copy Account</span>
+              </button>
+            </div>
+
+            <div style="display: flex; justify-content: space-between; align-items: center;">
+              <span style="color: var(--app-gray);">Transfer Reference:</span>
+              <code style="color: var(--app-gold); font-weight: bold;">SS-BOOKING-ABJ</code>
+            </div>
+          </div>
+        </div>
+
+        <p style="font-size: 0.78rem; color: var(--app-gray); text-align: center; margin-bottom: 1.2rem;">
+          Once transfer is made via your banking app, click below to confirm. Our Abuja accounts desk matches it instantly.
+        </p>
+
+        <button class="btn-gold" style="width: 100%; padding: 0.9rem; font-size: 0.95rem; font-weight: 700;" onclick="OrderingModule.confirmPaymentSimulation()">
+          ✓ I Have Sent The Transfer &rarr;
+        </button>
+      </div>
+
+      <!-- Payment Channel 3: Studio POS / Cash on Arrival -->
+      <div id="pay-panel-pos" class="pay-method-content-panel" style="display: none;">
+        <div style="background: var(--app-surface); border: 1px solid var(--app-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem; text-align: center;">
+          <span style="font-size: 2.2rem;">🏪</span>
+          <h4 style="font-size: 1.15rem; color: var(--app-ivory); margin: 0.4rem 0;">Smart Studio Abuja Concierge Desk</h4>
+          <p style="font-size: 0.82rem; color: var(--app-gray); max-width: 420px; margin: 0 auto 1.2rem;">
+            4 Kabama Estate Layout, Abuja. Your stage slot &amp; photography crew will be reserved upon confirmation.
+          </p>
+
+          <div style="background: var(--app-card); border: 1px dashed var(--app-gold); padding: 1rem; border-radius: 4px; display: inline-block; text-align: left; width: 100%;">
+            <div style="display: flex; justify-content: space-between; font-size: 0.82rem; margin-bottom: 0.4rem;">
+              <span style="color: var(--app-gray);">Accepted at Counter:</span>
+              <span style="color: var(--app-ivory); font-weight: 600;">POS Terminal, Contactless Card &amp; Cash</span>
+            </div>
+            <div style="display: flex; justify-content: space-between; font-size: 0.82rem;">
+              <span style="color: var(--app-gray);">Reservation Grace:</span>
+              <span style="color: var(--app-gold); font-weight: 600;">Guaranteed Slot for 24 Hours</span>
+            </div>
+          </div>
+        </div>
+
+        <button class="btn-gold" style="width: 100%; padding: 0.9rem; font-size: 0.95rem; font-weight: 700;" onclick="OrderingModule.confirmPaymentSimulation()">
+          ✓ Confirm Reservation &amp; Pay on Arrival &rarr;
+        </button>
+      </div>
+
+      <!-- Payment Channel 4: USDT / Crypto TRC20 -->
+      <div id="pay-panel-crypto" class="pay-method-content-panel" style="display: none;">
+        <div style="background: var(--app-surface); border: 1px solid var(--app-border); border-radius: 6px; padding: 1.5rem; margin-bottom: 1.5rem;">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 1rem;">
+            <div style="display: flex; align-items: center; gap: 0.6rem;">
+              <span style="font-size: 1.6rem;">🪙</span>
+              <div>
+                <strong style="color: var(--app-ivory);">USDT (TRC20 Network)</strong>
+                <div style="font-size: 0.72rem; color: #10B981;">Fast Settlement • Low Gas Fees</div>
+              </div>
+            </div>
+            <span class="status-badge status-booked">Web3 Vault</span>
+          </div>
+
+          <div style="background: var(--app-card); border: 1px solid var(--app-border); padding: 1rem; border-radius: 4px; margin-bottom: 1rem;">
+            <span style="font-size: 0.7rem; color: var(--app-gray); text-transform: uppercase;">Smart Studio TRC20 Wallet Address</span>
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 0.4rem; gap: 0.6rem;">
+              <code id="crypto-wallet-addr" style="font-size: 0.8rem; color: var(--app-gold); word-break: break-all; font-family: monospace;">TXj79gR4K8yPz2LmN8qWs9SmartStudioAbj</code>
+              <button class="btn-dark" style="padding: 0.35rem 0.7rem; font-size: 0.72rem; flex-shrink: 0;" onclick="OrderingModule.copyAccountDetails('TXj79gR4K8yPz2LmN8qWs9SmartStudioAbj', 'crypto-copy-status')">
+                <span id="crypto-copy-status">Copy</span>
+              </button>
+            </div>
+          </div>
+          <p style="font-size: 0.75rem; color: var(--app-gray); text-align: center;">
+            Send exact USDT equivalent on TRC20 network. Verified automatically on blockchain explorer.
+          </p>
+        </div>
+
+        <button class="btn-gold" style="width: 100%; padding: 0.9rem; font-size: 0.95rem; font-weight: 700;" onclick="OrderingModule.confirmPaymentSimulation()">
+          ✓ Confirm USDT Crypto Payment &rarr;
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ========================================================================
+       MODAL 5: LEAVE CLIENT REVIEW & STUDIO FEEDBACK MODAL
+       ======================================================================== -->
+  <div class="app-modal-backdrop" id="leave-review-modal" role="dialog" aria-modal="true">
+    <div class="app-modal-box" style="max-width: 620px;">
+      <button class="app-modal-close" style="position: absolute; top: 1.5rem; right: 1.5rem; font-size: 1.8rem;">&times;</button>
+      
+      <div style="border-bottom: 1px solid var(--app-border); padding-bottom: 1.2rem; margin-bottom: 1.5rem;">
+        <span style="font-size: 0.72rem; letter-spacing: 0.2em; text-transform: uppercase; color: var(--app-gold); font-weight: 700;">
+          CLIENT REPUTATION &bull; ABUJA
+        </span>
+        <h2 style="font-size: 1.8rem; color: var(--app-ivory); margin-top: 0.2rem;">Share Your Studio Experience</h2>
+        <p style="color: var(--app-gray); font-size: 0.85rem;">Your review will appear publicly on the Smart Studio client portal and booking page.</p>
+      </div>
+
+      <form id="studio-review-form">
+        <!-- Interactive 5-Star Picker -->
+        <div style="margin-bottom: 1.5rem; text-align: center; background: var(--app-surface); padding: 1.2rem; border-radius: 6px; border: 1px solid var(--app-border);">
+          <div style="font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.6rem;">
+            Overall Shoot Satisfaction
+          </div>
+          <div class="star-picker-wrapper" id="review-star-picker" style="display: flex; justify-content: center; gap: 0.8rem; font-size: 2.2rem; cursor: pointer; color: var(--app-gold);">
+            <span class="star-picker-item active" data-star="1">★</span>
+            <span class="star-picker-item active" data-star="2">★</span>
+            <span class="star-picker-item active" data-star="3">★</span>
+            <span class="star-picker-item active" data-star="4">★</span>
+            <span class="star-picker-item active" data-star="5">★</span>
+          </div>
+          <div id="star-picker-score-label" style="font-size: 0.82rem; color: var(--app-gold); font-weight: 600; margin-top: 0.5rem;">
+            5.0 - Masterpiece &amp; Flawless Experience
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem;">
+          <div>
+            <label style="display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Your Name / Entity</label>
+            <input type="text" id="review-form-name" required placeholder="e.g. Hajiya Amina Bello" style="width: 100%; padding: 0.75rem; background: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Role / Designation</label>
+            <input type="text" id="review-form-role" placeholder="e.g. Managing Director / VIP Client" style="width: 100%; padding: 0.75rem; background: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+          </div>
+        </div>
+
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin-bottom: 1.2rem;">
+          <div>
+            <label style="display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Service Category</label>
+            <select id="review-form-category" style="width: 100%; padding: 0.75rem; background: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+              <option value="Portrait Photography">Portrait &amp; Headshots</option>
+              <option value="Wedding Photography">Weddings &amp; Couples</option>
+              <option value="Corporate Photography">Corporate &amp; Executive</option>
+              <option value="Creative / Concept Photography">Creative &amp; Fashion</option>
+            </select>
+          </div>
+          <div>
+            <label style="display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Package Experienced</label>
+            <input type="text" id="review-form-package" value="Signature Studio Session" style="width: 100%; padding: 0.75rem; background: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+          </div>
+        </div>
+
+        <div style="margin-bottom: 1.2rem;">
+          <label style="display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Review Headline</label>
+          <input type="text" id="review-form-title" required placeholder="e.g. Flawless Lighting and Incredible Energy!" style="width: 100%; padding: 0.75rem; background: var(--app-surface); border: 1px solid var(--app-border); color: #fff;">
+        </div>
+
+        <div style="margin-bottom: 1.2rem;">
+          <label style="display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.3rem;">Detailed Feedback &amp; Comments</label>
+          <textarea id="review-form-comment" required placeholder="Describe your experience with our photographers, white cyclorama, retouching, and hospitality in Abuja..." style="width: 100%; min-height: 110px; padding: 0.8rem; background: var(--app-surface); border: 1px solid var(--app-border); color: #fff;"></textarea>
+        </div>
+
+        <!-- Quick Experience Highlights / Tags -->
+        <div style="margin-bottom: 1.8rem;">
+          <label style="display: block; font-size: 0.72rem; text-transform: uppercase; color: var(--app-gray); margin-bottom: 0.5rem;">
+            Click to Highlight What You Loved
+          </label>
+          <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
+            <span class="modal-tag-chip selected" data-tag="Master Lighting">💡 Master Lighting</span>
+            <span class="modal-tag-chip selected" data-tag="VIP Concierge">☕ VIP Concierge</span>
+            <span class="modal-tag-chip" data-tag="48h Preview">⚡ 48h Preview</span>
+            <span class="modal-tag-chip" data-tag="Punctual &amp; Polite">🤝 Punctual &amp; Polite</span>
+            <span class="modal-tag-chip" data-tag="Flawless Retouching">🎨 Flawless Retouching</span>
+            <span class="modal-tag-chip" data-tag="World-class Cyclorama">🏛️ White Cyclorama</span>
+          </div>
+        </div>
+
+        <div style="display: flex; justify-content: flex-end; gap: 1rem; border-top: 1px solid var(--app-border); padding-top: 1.2rem;">
+          <button type="button" class="btn-dark app-modal-close">Cancel</button>
+          <button type="submit" class="btn-gold" style="padding: 0.75rem 1.8rem;">
+            Publish Verified Review &rarr;
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 
@@ -1100,6 +1538,7 @@
   <script src="js/auth.js"></script>
   <script src="js/ordering.js"></script>
   <script src="js/proofing.js"></script>
+  <script src="js/reviews.js"></script>
   <script src="js/admin.js"></script>
   <script src="js/app.js"></script>
 </body>

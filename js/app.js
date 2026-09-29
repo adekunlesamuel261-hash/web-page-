@@ -11,7 +11,7 @@ const AppModule = {
     
     // Check initial route from hash or default to dashboard
     const hash = window.location.hash.replace('#', '');
-    if (['dashboard', 'new-order', 'orders', 'proofing', 'admin', 'profile', 'auth'].includes(hash)) {
+    if (['dashboard', 'new-order', 'orders', 'proofing', 'reviews', 'admin', 'profile', 'auth'].includes(hash)) {
       this.navigate(hash);
     } else {
       this.navigate('dashboard');
@@ -21,6 +21,7 @@ const AppModule = {
     AuthModule.init();
     OrderingModule.init();
     ProofingModule.init();
+    ReviewsModule.init();
     AdminModule.init();
 
     // Initialize luxury feature extensions
@@ -59,6 +60,7 @@ const AppModule = {
       'new-order': 'Online Ordering & Customizer',
       'orders': 'My Bookings & Milestones',
       'proofing': 'Digital Photo Proofing',
+      'reviews': 'Client Reviews & Reputation',
       'admin': 'Studio Manager Console',
       'profile': 'My Account & Settings',
       'auth': 'Sign In / Register'
@@ -74,6 +76,8 @@ const AppModule = {
       this.renderOrdersView();
     } else if (viewId === 'proofing') {
       ProofingModule.renderGallery();
+    } else if (viewId === 'reviews') {
+      ReviewsModule.renderReviews();
     } else if (viewId === 'admin') {
       AdminModule.renderMetrics();
       AdminModule.renderOrdersTable();

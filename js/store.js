@@ -7,7 +7,8 @@ const STORAGE_KEYS = {
   CURRENT_USER: 'smart_studio_current_user',
   USERS: 'smart_studio_users',
   ORDERS: 'smart_studio_orders',
-  PROOFS: 'smart_studio_proofs'
+  PROOFS: 'smart_studio_proofs',
+  REVIEWS: 'smart_studio_reviews'
 };
 
 // Initial Seed Data
@@ -216,6 +217,54 @@ const DEFAULT_PROOFS = [
   }
 ];
 
+const DEFAULT_REVIEWS = [
+  {
+    id: 'rev-101',
+    clientName: 'Hajiya Amina Bello',
+    clientAvatar: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=200&q=80',
+    clientRole: 'Managing Director, Maitama Energy',
+    serviceCategory: 'Corporate Photography',
+    packageName: 'Company Team & Culture',
+    rating: 5,
+    reviewTitle: 'Exemplary executive portraiture & utmost professionalism',
+    comment: 'Smart Studio transformed our entire executive board photography. The Profoto lighting on their white cyclorama in Abuja is truly peerless. The speed of digital delivery and retouching finesse exceeded every expectation.',
+    tags: ['Master Lighting', 'Punctual & Polite', 'Executive Polish'],
+    date: 'Sept 22, 2026',
+    verified: true,
+    studioReply: 'It was our absolute honor hosting your executive leadership team at 4 Kabama Estate, Hajiya Amina!'
+  },
+  {
+    id: 'rev-102',
+    clientName: 'Chuka & Chioma Okonkwo',
+    clientAvatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+    clientRole: 'VIP Wedding Clients',
+    serviceCategory: 'Wedding Photography',
+    packageName: 'Luxury Full Day Coverage',
+    rating: 5,
+    reviewTitle: 'A cinematic fairytale captured for our lifetime',
+    comment: 'From the pre-wedding studio conceptual shoot to the grand reception in Abuja, the team was invisible yet captured every tear and smile. The 350 retouched photos are breathtaking, and the Italian album is museum grade.',
+    tags: ['Flawless Retouching', 'Cinematic Vibe', '48h Preview'],
+    date: 'Sept 14, 2026',
+    verified: true,
+    studioReply: 'Wishing you both a lifetime of happiness! Thank you for trusting Smart Studio with your wedding legacy.'
+  },
+  {
+    id: 'rev-103',
+    clientName: 'Tunde Bakare',
+    clientAvatar: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=200&q=80',
+    clientRole: 'Creative Director & Recording Artist',
+    serviceCategory: 'Creative / Concept Photography',
+    packageName: 'Album & Creative Campaign',
+    rating: 5,
+    reviewTitle: 'The most inspiring studio environment in Nigeria',
+    comment: 'The gel lighting and dark aesthetic stage brought my album vision to life. The Bluetooth soundscape and espresso in the concierge lounge made an 8-hour shoot feel effortless. Top tier retouching.',
+    tags: ['Creative Direction', 'VIP Hospitality', 'Magazine Quality'],
+    date: 'Sept 08, 2026',
+    verified: true,
+    studioReply: 'Honored to craft the album visuals for your project, Tunde! Fire concepts all through.'
+  }
+];
+
 class AppStore {
   constructor() {
     this.init();
@@ -230,6 +279,9 @@ class AppStore {
     }
     if (!localStorage.getItem(STORAGE_KEYS.PROOFS)) {
       localStorage.setItem(STORAGE_KEYS.PROOFS, JSON.stringify(DEFAULT_PROOFS));
+    }
+    if (!localStorage.getItem(STORAGE_KEYS.REVIEWS)) {
+      localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify(DEFAULT_REVIEWS));
     }
     // Auto-login default client if not logged in
     if (!localStorage.getItem(STORAGE_KEYS.CURRENT_USER)) {
@@ -449,6 +501,47 @@ class AppStore {
       return { success: true };
     }
     return { success: false };
+  }
+
+  // --- Reviews & Client Feedback Methods ---
+  getReviews() {
+    const data = localStorage.getItem(STORAGE_KEYS.REVIEWS);
+    return data ? JSON.parse(data) : [];
+  }
+
+  addReview(reviewData) {
+    const reviews = this.getReviews();
+    const currentUser = this.getCurrentUser();
+    const newReview = {
+      id: 'rev-' + Date.now(),
+      clientName: currentUser ? currentUser.name : (reviewData.clientName || 'VIP Client'),
+      clientAvatar: currentUser?.avatar || reviewData.clientAvatar || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80',
+      clientRole: reviewData.clientRole || (currentUser ? 'Verified Studio Client' : 'VIP Studio Client'),
+      serviceCategory: reviewData.serviceCategory || 'Portrait Photography',
+      packageName: reviewData.packageName || 'Master Studio Session',
+      rating: parseInt(reviewData.rating, 10) || 5,
+      reviewTitle: reviewData.reviewTitle || 'Exceptional Studio Experience',
+      comment: reviewData.comment || '',
+      tags: reviewData.tags && reviewData.tags.length > 0 ? reviewData.tags : ['Master Lighting', 'VIP Concierge'],
+      date: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      verified: true,
+      studioReply: null
+    };
+
+    reviews.unshift(newReview);
+    localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify(reviews));
+    return newReview;
+  }
+
+  replyReview(reviewId, replyText) {
+    const reviews = this.getReviews();
+    const review = reviews.find(r => r.id === reviewId);
+    if (review) {
+      review.studioReply = replyText.trim();
+      localStorage.setItem(STORAGE_KEYS.REVIEWS, JSON.stringify(reviews));
+      return true;
+    }
+    return false;
   }
 
   // Currency Formatter
